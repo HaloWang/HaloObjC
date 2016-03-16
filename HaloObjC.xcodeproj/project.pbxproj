@@ -384,6 +384,7 @@
 				0919C3101C998ABB00E1CA6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0919C3291C998B0D00E1CA6E /* Build configuration list for PBXNativeTarget "HaloObjCDemo" */ = {
 			isa = XCConfigurationList;
@@ -392,6 +393,7 @@
 				0919C32B1C998B0D00E1CA6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

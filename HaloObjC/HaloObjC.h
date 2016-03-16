@@ -23,6 +23,18 @@ extern NSString *LibraryPath;
 extern NSString *CachePath;
 extern NSString *TempPath;
 
+#pragma mark - Bundle
+extern NSString *MainBundlePath;
+extern NSString *ResourcePath;
+extern NSString *ExecutablePath;
+
+#pragma mark - 应用信息
+extern NSString *AppBundleID;
+extern NSString *AppVersion;
+extern NSString *AppBuildVersion;
+
+#pragma mark - 系统信息
+extern NSString *SystemVersion;
 extern float SystemVersionNumber;
 
 @interface HaloObjC : NSObject

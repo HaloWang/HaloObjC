@@ -8,58 +8,62 @@
 
 #import "HaloObjC.h"
 
+#pragma mark - 固定尺寸
 CGFloat ScreenWidth;
 CGFloat ScreenHeight;
-NSString *HomePath;
-NSString *CachePath;
-NSString *DocumentPath;
-NSString *LibraryPath;
-NSString *TempPath;
-float SystemVersionNumber;
 CGFloat NavigationBarHeight;
 CGFloat TabBarHeight;
 CGFloat StatusBarHeight;
 
-typedef void(^VoidBlock)();
+#pragma mark - 沙盒路径
+NSString *HomePath;
+NSString *DocumentPath;
+NSString *LibraryPath;
+NSString *CachePath;
+NSString *TempPath;
+
+#pragma mark - Bundle
+NSString *MainBundlePath;
+NSString *ResourcePath;
+NSString *ExecutablePath;
+
+#pragma mark - 应用信息
+NSString *AppBundleID;
+NSString *AppVersion;
+NSString *AppBuildVersion;
+
+#pragma mark - 系统信息
+NSString *SystemVersion;
+float SystemVersionNumber;
 
 @implementation HaloObjC
 
 + (void)server {
-    measure(^{
-        CGSize _screenSize   = [UIScreen mainScreen].bounds.size;
-        ScreenHeight         = _screenSize.height;
-        ScreenWidth          = _screenSize.width;
-        NavigationBarHeight  = 64;
-        TabBarHeight         = 49;
-        StatusBarHeight      = 20;
-        
-        HomePath             = NSHomeDirectory();
-        CachePath            = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        DocumentPath         = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        LibraryPath          = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        TempPath             = NSTemporaryDirectory();
-        
-        SystemVersionNumber  = [UIDevice currentDevice].systemVersion.floatValue;
-        
-    });
-}
-
-/**
- *  测量代码块耗时
- *
- *  @param doSomething 代码块
- */
-void measure(VoidBlock doSomething) {
+    CGSize _screenSize           = [UIScreen mainScreen].bounds.size;
+    ScreenHeight                 = _screenSize.height;
+    ScreenWidth                  = _screenSize.width;
+    NavigationBarHeight          = 64;
+    TabBarHeight                 = 49;
+    StatusBarHeight              = 20;
     
-    NSDate* tmpStartData = [NSDate date];
+    HomePath                     = NSHomeDirectory();
+    CachePath                    = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    DocumentPath                 = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    LibraryPath                  = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    TempPath                     = NSTemporaryDirectory();
     
-    if (doSomething) {
-        doSomething();
-    }
+    NSBundle *mainBundle         = [NSBundle mainBundle];
+    MainBundlePath               = [mainBundle bundlePath];
+    ResourcePath                 = [mainBundle resourcePath];
+    ExecutablePath               = [mainBundle executablePath];
     
-    double deltaTime = [[NSDate date] timeIntervalSinceDate:tmpStartData];
-    NSLog(@"cost time = %f", deltaTime);
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    AppBundleID                  = infoDictionary[@"CFBundleIdentifier"];
+    AppVersion                   = infoDictionary[@"CFBundleShortVersionString"];
+    AppBuildVersion              = infoDictionary[@"CFBundleVersion"];
     
+    SystemVersion                = [UIDevice currentDevice].systemVersion;
+    SystemVersionNumber          = SystemVersion.floatValue;
 }
 
 @end
