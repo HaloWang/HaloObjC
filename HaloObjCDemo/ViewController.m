@@ -18,7 +18,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"%f",ScreenWidth);
-    
 }
 
 - (void)didReceiveMemoryWarning {

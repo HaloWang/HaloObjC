@@ -27,6 +27,9 @@ extern float SystemVersionNumber;
 
 @interface HaloObjC : NSObject
 
+/**
+ *  开始服务
+ */
 + (void)server;
 
 @end
