@@ -52,9 +52,6 @@ void ccRight(id obj) {
         return;
     }
     printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"✅",[obj description]]UTF8String]);
-    if (!CCLogEnable) {
-        return;
-    }
 }
 
 void ccError(id obj) {
@@ -65,6 +62,9 @@ void ccError(id obj) {
 }
 
 void ccWarning(id obj) {
+    if (!CCLogEnable) {
+        return;
+    }
     printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"⚠️",[obj description]]UTF8String]);
 }
 
