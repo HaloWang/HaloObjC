@@ -18,11 +18,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"%f",ScreenWidth);
+    
+    [[UIView new] cornerRadius:5 borderWidth:0.5 borderColor:[UIColor whiteColor]];
+    
+    cc(self);
+    ccRight(self);
+    ccWarning(self);
+    ccError(self);
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

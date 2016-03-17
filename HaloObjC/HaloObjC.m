@@ -36,6 +36,38 @@ NSString *AppBuildVersion;
 NSString *SystemVersion;
 float SystemVersionNumber;
 
+#pragma mark - ccLog
+
+BOOL CCLogEnable = YES;
+
+void cc(id obj) {
+    if (!CCLogEnable) {
+        return;
+    }
+    printf("%s\n", [[obj description]UTF8String]);
+}
+
+void ccRight(id obj) {
+    if (!CCLogEnable) {
+        return;
+    }
+    printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"✅",[obj description]]UTF8String]);
+    if (!CCLogEnable) {
+        return;
+    }
+}
+
+void ccError(id obj) {
+    if (!CCLogEnable) {
+        return;
+    }
+    printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"❌",[obj description]]UTF8String]);
+}
+
+void ccWarning(id obj) {
+    printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"⚠️",[obj description]]UTF8String]);
+}
+
 @implementation HaloObjC
 
 + (void)server {
@@ -66,4 +98,26 @@ float SystemVersionNumber;
     SystemVersionNumber          = SystemVersion.floatValue;
 }
 
++ (void)logEnable:(BOOL)enable {
+    CCLogEnable = enable;
+}
+
 @end
+
+@implementation UIView (Halo)
+
+- (void)cornerRadius:(CGFloat)radius {
+    self.layer.cornerRadius = radius;
+    self.layer.masksToBounds = YES;
+}
+
+- (void)cornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor {
+    self.layer.cornerRadius = radius;
+    self.layer.masksToBounds = true;
+    self.layer.borderWidth = borderWidth;
+    self.layer.borderColor = borderColor.CGColor;
+    
+}
+
+@end
+

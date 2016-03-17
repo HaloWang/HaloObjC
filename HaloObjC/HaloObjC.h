@@ -37,6 +37,38 @@ extern NSString *AppBuildVersion;
 extern NSString *SystemVersion;
 extern float SystemVersionNumber;
 
+#pragma mark - Log
+
+/**
+ *  简化 NSLog 调用
+ *
+ *  @param obj Something you wants to print
+ */
+void cc(id obj);
+
+/**
+ *  简化 NSLog 调用
+ *
+ *  @param obj Something you wants to print with ✅
+ */
+void ccRight(id obj);
+
+/**
+ *  简化 NSLog 调用
+ *
+ *  @param obj Something you wants to print with ❌
+ */
+void ccError(id obj);
+
+/**
+ *  简化 NSLog 调用
+ *
+ *  @param obj Something you wants to print with ⚠️
+ */
+void ccWarning(id obj);
+
+#pragma mark - HaloObjC
+
 @interface HaloObjC : NSObject
 
 /**
@@ -44,4 +76,34 @@ extern float SystemVersionNumber;
  */
 + (void)server;
 
+/**
+ *  是否开启 Log（也就是 ccLog），默认值是 YES
+ */
++ (void)logEnable:(BOOL)enable;
+
 @end
+
+#pragma mark - UIView
+
+@interface UIView (Halo)
+
+/**
+ *  设定圆角半径
+ *
+ *  @param radius 圆角半径
+ */
+- (void)cornerRadius:(CGFloat)radius;
+
+/**
+ *  同时设定 圆角半径 描边宽度 描边颜色
+ *
+ *  @param radius      圆角半径
+ *  @param borderWidth 描边宽度
+ *  @param borderColor 描边颜色
+ */
+- (void)cornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor;
+
+@end
+
+
+
