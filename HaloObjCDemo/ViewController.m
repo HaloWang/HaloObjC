@@ -26,6 +26,8 @@
     ccWarning(self);
     ccError(self);
     
+    ColorWithHexValue(0x666666);
+    
 }
 
 - (void)didReceiveMemoryWarning {

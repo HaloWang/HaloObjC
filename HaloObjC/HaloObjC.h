@@ -105,5 +105,16 @@ void ccWarning(id obj);
 
 @end
 
+#pragma mark - UIColor
+
+UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b);
+UIColor *ColorWithRGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
+
+/**
+ *  use hexValue like 0xFFFFFF to create a UIColor object
+ */
+UIColor *ColorWithHexValue(NSUInteger hexValue);
+UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a);
+
 
 

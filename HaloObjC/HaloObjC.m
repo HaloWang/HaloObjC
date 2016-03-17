@@ -121,3 +121,20 @@ void ccWarning(id obj) {
 
 @end
 
+UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b) {
+    return [UIColor colorWithRed: r / 255.0f green: g / 255.0f blue: b / 255.0f alpha:1.0];
+}
+
+UIColor *ColorWithRGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a){
+    return [UIColor colorWithRed: r / 255.0f green: g / 255.0f blue: b / 255.0f alpha: a];
+}
+
+UIColor *ColorWithHexValue(NSUInteger hexValue) {
+    return [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:1.0];
+}
+UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a) {
+    return [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:a];
+}
+
+
+
