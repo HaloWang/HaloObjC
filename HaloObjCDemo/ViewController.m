@@ -21,6 +21,10 @@
     measure(^{
         self.view.backgroundColor = [UIColor whiteColor];
     });
+    
+    UIView *aView = [[UIView alloc] initWithFrame:CM(200, 200, 100)];
+    aView.backgroundColor = ColorWithHexValue(0xFFBB44);
+    [self.view addSubview:aView];
 }
 
 @end

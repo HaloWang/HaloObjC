@@ -119,6 +119,16 @@ void ccWarning(id obj) {
 
 @end
 
+#pragma mark - UIView
+
+CGRect RM(CGFloat x, CGFloat y, CGFloat width, CGFloat height) {
+    return CGRectMake(x, y, width, height);
+}
+
+CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
+    return RM((ScreenWidth - width)/2, y, width, height);
+}
+
 @implementation UIView (Halo)
 
 - (void)cornerRadius:(CGFloat)radius {
@@ -135,6 +145,8 @@ void ccWarning(id obj) {
 }
 
 @end
+
+#pragma mark - UIColor
 
 UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b) {
     return [UIColor colorWithRed: r / 255.0f green: g / 255.0f blue: b / 255.0f alpha:1.0];

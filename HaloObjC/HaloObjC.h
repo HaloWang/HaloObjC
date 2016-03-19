@@ -95,6 +95,12 @@ void ccWarning(id obj);
 
 #pragma mark - UIView
 
+/// 相当于 CGRectMake
+CGRect RM(CGFloat x, CGFloat y, CGFloat width, CGFloat height);
+
+/// 创建一个水平居中（相对于屏幕）的 CGRect 值
+CGRect CM(CGFloat y, CGFloat width, CGFloat height);
+
 @interface UIView (Halo)
 
 /**
