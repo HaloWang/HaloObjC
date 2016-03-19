@@ -45,7 +45,17 @@ extern float SystemVersionNumber;
  *
  *  @param ^CodeWaitingForMeasure 你想测量的代码
  */
-void measure(void(^CodeWaitingForMeasure)(void));
+void Measure(void(^CodeWaitingForMeasure)());
+
+// TODO: ⚠️ Unfinish!
+
+void Async(void(^noUITask)());
+
+void AsyncFinish(void(^noUITask)(), void(^UITask)());
+
+void Last(void(^UITask)());
+
+void After(float second, void(^UITask)());
 
 #pragma mark - Log
 

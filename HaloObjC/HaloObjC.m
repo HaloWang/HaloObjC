@@ -39,13 +39,37 @@ float SystemVersionNumber;
 
 #pragma mark - Measure
 
-void measure(void(^CodeWaitingForMeasure)(void)) {
+void Measure(void(^CodeWaitingForMeasure)()) {
     NSDate *startTime = [NSDate date];
     if (CodeWaitingForMeasure) {
         CodeWaitingForMeasure();
     }
     NSTimeInterval endTime = [[NSDate date] timeIntervalSinceDate:startTime];
     cc([NSString stringWithFormat:@"代码执行时间为 %f 秒", endTime]);
+}
+
+void Async(void(^noUITask)()) {
+    
+}
+
+void AsyncFinish(void(^noUITask)(), void(^UITask)()) {
+    
+}
+
+void Last(void(^UITask)()) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (UITask) {
+            UITask();
+        }
+    });
+}
+
+void After(float second, void(^UITask)()) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(second * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (UITask) {
+            UITask();
+        }
+    });
 }
 
 #pragma mark - Log

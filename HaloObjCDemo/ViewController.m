@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    measure(^{
+    Measure(^{
         self.view.backgroundColor = [UIColor whiteColor];
     });
     
