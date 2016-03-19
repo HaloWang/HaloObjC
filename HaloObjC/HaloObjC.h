@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 
 #pragma mark - 固定尺寸
+extern CGRect  ScreenBounds;
 extern CGFloat ScreenWidth;
 extern CGFloat ScreenHeight;
 extern CGFloat NavigationBarHeight;
@@ -36,6 +37,15 @@ extern NSString *AppBuildVersion;
 #pragma mark - 系统信息
 extern NSString *SystemVersion;
 extern float SystemVersionNumber;
+
+#pragma mark - Measure
+
+/**
+ *  测量某段代码的执行时间
+ *
+ *  @param ^CodeWaitingForMeasure 你想测量的代码
+ */
+void measure(void(^CodeWaitingForMeasure)(void));
 
 #pragma mark - Log
 

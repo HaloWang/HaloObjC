@@ -9,6 +9,7 @@
 #import "HaloObjC.h"
 
 #pragma mark - 固定尺寸
+CGRect  ScreenBounds;
 CGFloat ScreenWidth;
 CGFloat ScreenHeight;
 CGFloat NavigationBarHeight;
@@ -36,7 +37,18 @@ NSString *AppBuildVersion;
 NSString *SystemVersion;
 float SystemVersionNumber;
 
-#pragma mark - ccLog
+#pragma mark - Measure
+
+void measure(void(^CodeWaitingForMeasure)(void)) {
+    NSDate *startTime = [NSDate date];
+    if (CodeWaitingForMeasure) {
+        CodeWaitingForMeasure();
+    }
+    NSTimeInterval endTime = [[NSDate date] timeIntervalSinceDate:startTime];
+    cc([NSString stringWithFormat:@"代码执行时间为 %f 秒", endTime]);
+}
+
+#pragma mark - Log
 
 BOOL CCLogEnable = YES;
 
@@ -71,7 +83,10 @@ void ccWarning(id obj) {
 @implementation HaloObjC
 
 + (void)server {
-    CGSize _screenSize           = [UIScreen mainScreen].bounds.size;
+    
+    CGRect _screenBounds         = [UIScreen mainScreen].bounds;
+    ScreenBounds                 = _screenBounds;
+    CGSize _screenSize           = _screenBounds.size;
     ScreenHeight                 = _screenSize.height;
     ScreenWidth                  = _screenSize.width;
     NavigationBarHeight          = 64;
