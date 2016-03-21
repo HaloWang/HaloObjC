@@ -151,6 +151,14 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 @end
 
+#pragma mark - UICollectionViewCell
+
+@interface UICollectionViewCell (Halo)
+
++ (NSString *)hl_reuseIdentifier;
+
+@end
+
 #pragma mark - UIColor
 
 UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b);
