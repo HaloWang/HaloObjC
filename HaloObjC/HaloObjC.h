@@ -131,6 +131,18 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 @end
 
+#pragma mark - UIScrollView
+
+@interface UIScrollView (Halo)
+
+@property (nonatomic, assign) CGFloat hl_insetTop;
+@property (nonatomic, assign) CGFloat hl_insetBottom;
+
+@property (nonatomic, assign) CGFloat hl_offsetX;
+@property (nonatomic, assign) CGFloat hl_offsetY;
+
+@end
+
 #pragma mark - UIColor
 
 UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b);

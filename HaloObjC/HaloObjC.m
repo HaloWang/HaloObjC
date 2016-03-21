@@ -49,11 +49,24 @@ void Measure(void(^CodeWaitingForMeasure)()) {
 }
 
 void Async(void(^noUITask)()) {
-    
+    dispatch_async(dispatch_queue_create("HaloObjC_Async_Queue", NULL), ^{
+       if (noUITask) {
+           noUITask();
+       }
+    });
 }
 
 void AsyncFinish(void(^noUITask)(), void(^UITask)()) {
-    
+    dispatch_async(dispatch_queue_create("HaloObjC_Async_Queue", NULL), ^{
+        if (noUITask) {
+            noUITask();
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+           if (UITask) {
+               UITask();
+           }
+        });
+    });
 }
 
 void Last(void(^UITask)()) {
@@ -118,9 +131,9 @@ void ccWarning(id obj) {
     StatusBarHeight              = 20;
     
     HomePath                     = NSHomeDirectory();
-    CachePath                    = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    DocumentPath                 = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    LibraryPath                  = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    CachePath                    = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    DocumentPath                 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    LibraryPath                  = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)[0];
     TempPath                     = NSTemporaryDirectory();
     
     NSBundle *mainBundle         = [NSBundle mainBundle];
@@ -166,6 +179,48 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
     self.layer.borderWidth = borderWidth;
     self.layer.borderColor = borderColor.CGColor;
     
+}
+
+@end
+
+#pragma mark - UIScrollView
+
+@implementation UIScrollView (Halo)
+
+- (CGFloat)hl_insetBottom {
+    return self.contentInset.bottom;
+}
+
+- (void)setHl_insetBottom:(CGFloat)hl_insetBottom {
+    UIEdgeInsets inset = self.contentInset;
+    self.contentInset = UIEdgeInsetsMake(inset.top, inset.bottom, hl_insetBottom, inset.right);
+}
+
+- (CGFloat)hl_insetTop {
+    return self.contentInset.top;
+}
+
+- (void)setHl_insetTop:(CGFloat)hl_insetTop {
+    UIEdgeInsets inset = self.contentInset;
+    self.contentInset = UIEdgeInsetsMake(hl_insetTop, inset.bottom, inset.bottom, inset.right);
+}
+
+- (CGFloat)hl_offsetX {
+    return self.contentOffset.x;
+}
+
+- (void)setHl_offsetX:(CGFloat)hl_offsetX {
+    CGPoint offset = self.contentOffset;
+    self.contentOffset = CGPointMake(hl_offsetX, offset.y);
+}
+
+- (CGFloat)hl_offsetY {
+    return self.contentOffset.y;
+}
+
+- (void)setHl_offsetY:(CGFloat)hl_offsetY {
+    CGPoint offset = self.contentOffset;
+    self.contentOffset = CGPointMake(offset.x, hl_offsetY);
 }
 
 @end
