@@ -147,7 +147,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 @interface UITableViewCell (Halo)
 
-+ (nonnull NSString *)hl_reuseIdentifier;
++ (NSString *)hl_reuseIdentifier;
 
 @end
 
