@@ -143,6 +143,14 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 @end
 
+#pragma mark - UITableViewCell
+
+@interface UITableViewCell (Halo)
+
++ (nonnull NSString *)hl_reuseIdentifier;
+
+@end
+
 #pragma mark - UIColor
 
 UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b);
