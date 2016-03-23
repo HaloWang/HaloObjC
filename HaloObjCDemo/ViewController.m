@@ -18,13 +18,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    UIView *aView = [[UIView alloc] initWithFrame:CM(200, 200, 100)];
+    
     Measure(^{
-        self.view.backgroundColor = [UIColor whiteColor];
+        aView.backgroundColor = HEX(@"#FFBB44");
     });
     
-    UIView *aView = [[UIView alloc] initWithFrame:CM(200, 200, 100)];
-    aView.backgroundColor = ColorWithHexValue(0xFFBB44);
     [self.view addSubview:aView];
+    
 }
 
 @end

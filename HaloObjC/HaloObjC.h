@@ -42,6 +42,7 @@ extern float SystemVersionNumber;
 
 /**
  *  测量某段代码的执行时间
+ *  你不用考虑 block 执行的线程
  *
  *  @param ^CodeWaitingForMeasure 你想测量的代码
  */
@@ -161,14 +162,26 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 #pragma mark - UIColor
 
-UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b);
-UIColor *ColorWithRGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
+UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b) DEPRECATED_ATTRIBUTE;
+UIColor *ColorWithRGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a) DEPRECATED_ATTRIBUTE;
 
 /**
  *  use hexValue like 0xFFFFFF to create a UIColor object
  */
-UIColor *ColorWithHexValue(NSUInteger hexValue);
+UIColor *ColorWithHexValue(NSUInteger hexValue) DEPRECATED_ATTRIBUTE;
 UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a);
 
+/**
+ *  use hexValue like @"FFFFFF" (or @"#FFFFFF") to create a UIColor object
+ */
+UIColor *HEX(NSString *hexString);
+
+UIColor *RGB(CGFloat r, CGFloat g, CGFloat b);
+
+/**
+ *  带有 alpha 的 RGB
+ *  @param a 0~1.0
+ */
+UIColor *RGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
 
 

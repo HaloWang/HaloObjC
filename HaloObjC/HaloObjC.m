@@ -258,9 +258,47 @@ UIColor *ColorWithRGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a){
 UIColor *ColorWithHexValue(NSUInteger hexValue) {
     return [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:1.0];
 }
+
 UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a) {
     return [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:a];
 }
 
 
+/// @see http://stackoverflow.com/questions/3805177/how-to-convert-hex-rgb-color-codes-to-uicolor
 
+void SKScanHexColor(NSString * hexString, float * red, float * green, float * blue, float * alpha) {
+    
+    NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
+    cc(cleanString);
+    if([cleanString length] == 3) {
+        cleanString = [NSString stringWithFormat:@"%@%@%@%@%@%@",
+                       [cleanString substringWithRange:NSMakeRange(0, 1)],[cleanString substringWithRange:NSMakeRange(0, 1)],
+                       [cleanString substringWithRange:NSMakeRange(1, 1)],[cleanString substringWithRange:NSMakeRange(1, 1)],
+                       [cleanString substringWithRange:NSMakeRange(2, 1)],[cleanString substringWithRange:NSMakeRange(2, 1)]];
+    }
+    if([cleanString length] == 6) {
+        cleanString = [cleanString stringByAppendingString:@"ff"];
+    }
+    
+    unsigned int baseValue;
+    [[NSScanner scannerWithString:cleanString] scanHexInt:&baseValue];
+    
+    if (red) { *red = ((baseValue >> 24) & 0xFF)/255.0f; }
+    if (green) { *green = ((baseValue >> 16) & 0xFF)/255.0f; }
+    if (blue) { *blue = ((baseValue >> 8) & 0xFF)/255.0f; }
+    if (alpha) { *alpha = ((baseValue >> 0) & 0xFF)/255.0f; }
+}
+
+UIColor *HEX(NSString *hexString) {
+    float red, green, blue, alpha;
+    SKScanHexColor(hexString, &red, &green, &blue, &alpha);
+    return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
+
+UIColor *RGB(CGFloat r, CGFloat g, CGFloat b) {
+    return [UIColor colorWithRed: r / 255.0f green: g / 255.0f blue: b / 255.0f alpha:1.0];
+}
+
+UIColor *RGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a) {
+    return [UIColor colorWithRed: r / 255.0f green: g / 255.0f blue: b / 255.0f alpha: a];
+}
