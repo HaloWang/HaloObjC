@@ -9,7 +9,7 @@
 #import "HaloObjC.h"
 
 #pragma mark - 固定尺寸
-CGRect  ScreenBounds;
+CGRect ScreenBounds;
 CGFloat ScreenWidth;
 CGFloat ScreenHeight;
 CGFloat NavigationBarHeight;
@@ -50,9 +50,9 @@ void Measure(void(^CodeWaitingForMeasure)()) {
 
 void Async(void(^noUITask)()) {
     dispatch_async(dispatch_queue_create("HaloObjC_Async_Queue", NULL), ^{
-       if (noUITask) {
-           noUITask();
-       }
+        if (noUITask) {
+            noUITask();
+        }
     });
 }
 
@@ -62,9 +62,9 @@ void AsyncFinish(void(^noUITask)(), void(^UITask)()) {
             noUITask();
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-           if (UITask) {
-               UITask();
-           }
+            if (UITask) {
+                UITask();
+            }
         });
     });
 }
@@ -78,7 +78,7 @@ void Last(void(^UITask)()) {
 }
 
 void After(float second, void(^UITask)()) {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(second * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (second * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (UITask) {
             UITask();
         }
@@ -93,34 +93,34 @@ void cc(id obj) {
     if (!CCLogEnable) {
         return;
     }
-    printf("%s\n", [[obj description]UTF8String]);
+    printf("%s\n", [[obj description] UTF8String]);
 }
 
 void ccRight(id obj) {
     if (!CCLogEnable) {
         return;
     }
-    printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"✅",[obj description]]UTF8String]);
+    printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"✅", [obj description]] UTF8String]);
 }
 
 void ccError(id obj) {
     if (!CCLogEnable) {
         return;
     }
-    printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"❌",[obj description]]UTF8String]);
+    printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"❌", [obj description]] UTF8String]);
 }
 
 void ccWarning(id obj) {
     if (!CCLogEnable) {
         return;
     }
-    printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"⚠️",[obj description]]UTF8String]);
+    printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"⚠️", [obj description]] UTF8String]);
 }
 
 @implementation HaloObjC
 
 + (void)server {
-    
+
     CGRect _screenBounds         = [UIScreen mainScreen].bounds;
     ScreenBounds                 = _screenBounds;
     CGSize _screenSize           = _screenBounds.size;
@@ -129,23 +129,23 @@ void ccWarning(id obj) {
     NavigationBarHeight          = 64;
     TabBarHeight                 = 49;
     StatusBarHeight              = 20;
-    
+
     HomePath                     = NSHomeDirectory();
     CachePath                    = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
     DocumentPath                 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     LibraryPath                  = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)[0];
     TempPath                     = NSTemporaryDirectory();
-    
+
     NSBundle *mainBundle         = [NSBundle mainBundle];
     MainBundlePath               = [mainBundle bundlePath];
     ResourcePath                 = [mainBundle resourcePath];
     ExecutablePath               = [mainBundle executablePath];
-    
+
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     AppBundleID                  = infoDictionary[@"CFBundleIdentifier"];
     AppVersion                   = infoDictionary[@"CFBundleShortVersionString"];
     AppBuildVersion              = infoDictionary[@"CFBundleVersion"];
-    
+
     SystemVersion                = [UIDevice currentDevice].systemVersion;
     SystemVersionNumber          = SystemVersion.floatValue;
 }
@@ -163,7 +163,7 @@ CGRect RM(CGFloat x, CGFloat y, CGFloat width, CGFloat height) {
 }
 
 CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
-    return RM((ScreenWidth - width)/2, y, width, height);
+    return RM((ScreenWidth - width) / 2, y, width, height);
 }
 
 @implementation UIView (Halo)
@@ -178,7 +178,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
     self.layer.masksToBounds = true;
     self.layer.borderWidth = borderWidth;
     self.layer.borderColor = borderColor.CGColor;
-    
+
 }
 
 @end
@@ -248,45 +248,45 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 #pragma mark - UIColor
 
 UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b) {
-    return [UIColor colorWithRed: r / 255.0f green: g / 255.0f blue: b / 255.0f alpha:1.0];
+    return [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0];
 }
 
-UIColor *ColorWithRGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a){
-    return [UIColor colorWithRed: r / 255.0f green: g / 255.0f blue: b / 255.0f alpha: a];
+UIColor *ColorWithRGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a) {
+    return [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:a];
 }
 
 UIColor *ColorWithHexValue(NSUInteger hexValue) {
-    return [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:1.0];
+    return [UIColor colorWithRed:((float) ((hexValue & 0xFF0000) >> 16)) / 255.0 green:((float) ((hexValue & 0xFF00) >> 8)) / 255.0 blue:((float) (hexValue & 0xFF)) / 255.0 alpha:1.0];
 }
 
 UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a) {
-    return [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:a];
+    return [UIColor colorWithRed:((float) ((hexValue & 0xFF0000) >> 16)) / 255.0 green:((float) ((hexValue & 0xFF00) >> 8)) / 255.0 blue:((float) (hexValue & 0xFF)) / 255.0 alpha:a];
 }
 
 
 /// @see http://stackoverflow.com/questions/3805177/how-to-convert-hex-rgb-color-codes-to-uicolor
 
-void SKScanHexColor(NSString * hexString, float * red, float * green, float * blue, float * alpha) {
-    
+void SKScanHexColor(NSString *hexString, float *red, float *green, float *blue, float *alpha) {
+
     NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
     cc(cleanString);
-    if([cleanString length] == 3) {
+    if ([cleanString length] == 3) {
         cleanString = [NSString stringWithFormat:@"%@%@%@%@%@%@",
-                       [cleanString substringWithRange:NSMakeRange(0, 1)],[cleanString substringWithRange:NSMakeRange(0, 1)],
-                       [cleanString substringWithRange:NSMakeRange(1, 1)],[cleanString substringWithRange:NSMakeRange(1, 1)],
-                       [cleanString substringWithRange:NSMakeRange(2, 1)],[cleanString substringWithRange:NSMakeRange(2, 1)]];
+                                                 [cleanString substringWithRange:NSMakeRange(0, 1)], [cleanString substringWithRange:NSMakeRange(0, 1)],
+                                                 [cleanString substringWithRange:NSMakeRange(1, 1)], [cleanString substringWithRange:NSMakeRange(1, 1)],
+                                                 [cleanString substringWithRange:NSMakeRange(2, 1)], [cleanString substringWithRange:NSMakeRange(2, 1)]];
     }
-    if([cleanString length] == 6) {
+    if ([cleanString length] == 6) {
         cleanString = [cleanString stringByAppendingString:@"ff"];
     }
-    
+
     unsigned int baseValue;
     [[NSScanner scannerWithString:cleanString] scanHexInt:&baseValue];
-    
-    if (red) { *red = ((baseValue >> 24) & 0xFF)/255.0f; }
-    if (green) { *green = ((baseValue >> 16) & 0xFF)/255.0f; }
-    if (blue) { *blue = ((baseValue >> 8) & 0xFF)/255.0f; }
-    if (alpha) { *alpha = ((baseValue >> 0) & 0xFF)/255.0f; }
+
+    if (red) {*red = ((baseValue >> 24) & 0xFF) / 255.0f;}
+    if (green) {*green = ((baseValue >> 16) & 0xFF) / 255.0f;}
+    if (blue) {*blue = ((baseValue >> 8) & 0xFF) / 255.0f;}
+    if (alpha) {*alpha = ((baseValue >> 0) & 0xFF) / 255.0f;}
 }
 
 UIColor *HEX(NSString *hexString) {
@@ -296,9 +296,9 @@ UIColor *HEX(NSString *hexString) {
 }
 
 UIColor *RGB(CGFloat r, CGFloat g, CGFloat b) {
-    return [UIColor colorWithRed: r / 255.0f green: g / 255.0f blue: b / 255.0f alpha:1.0];
+    return [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0];
 }
 
 UIColor *RGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a) {
-    return [UIColor colorWithRed: r / 255.0f green: g / 255.0f blue: b / 255.0f alpha: a];
+    return [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:a];
 }
