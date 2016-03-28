@@ -1,0 +1,14 @@
+PODS:
+  - HaloObjC (0.0.1)
+
+DEPENDENCIES:
+  - HaloObjC (from `./HaloObjC`)
+
+EXTERNAL SOURCES:
+  HaloObjC:
+    :path: ./HaloObjC
+
+SPEC CHECKSUMS:
+  HaloObjC: e0ed5039fdebd6eb2971db2927eaee63ae90faf6
+
+COCOAPODS: 0.39.0

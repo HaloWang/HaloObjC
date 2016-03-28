@@ -94,8 +94,9 @@ void ccWarning(id obj);
 
 /**
  *  开始服务
+ *  已经不用主动调用该方法了
  */
-+ (void)server;
++ (void)server DEPRECATED_ATTRIBUTE;
 
 /**
  *  是否开启 Log（也就是 ccLog），默认值是 YES
@@ -162,13 +163,13 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 #pragma mark - UIColor
 
-UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b) DEPRECATED_ATTRIBUTE;
-UIColor *ColorWithRGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a) DEPRECATED_ATTRIBUTE;
+UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b);
+UIColor *ColorWithRGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
 
 /**
  *  use hexValue like 0xFFFFFF to create a UIColor object
  */
-UIColor *ColorWithHexValue(NSUInteger hexValue) DEPRECATED_ATTRIBUTE;
+UIColor *ColorWithHexValue(NSUInteger hexValue);
 UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a);
 
 /**

@@ -156,6 +156,15 @@ void ccWarning(id obj) {
 
 @end
 
+@implementation UIScreen (HaloObjC)
+
++ (void)load {
+    [super load];
+    [HaloObjC server];
+}
+
+@end
+
 #pragma mark - UIView
 
 CGRect RM(CGFloat x, CGFloat y, CGFloat width, CGFloat height) {

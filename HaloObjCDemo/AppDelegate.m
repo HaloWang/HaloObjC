@@ -2,12 +2,11 @@
 //  AppDelegate.m
 //  HaloObjCDemo
 //
-//  Created by 王策 on 16/3/16.
-//
+//  Created by 王策 on 16/3/28.
+//  Copyright © 2016年 王策. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "HaloObjC.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +16,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [HaloObjC server];
+    // Override point for customization after application launch.
     return YES;
 }
 
