@@ -160,6 +160,7 @@ void ccWarning(id obj) {
 
 + (void)load {
     [super load];
+    //  use this way to avoid forgetting call +server method
     [HaloObjC server];
 }
 
