@@ -93,12 +93,6 @@ void ccWarning(id obj);
 @interface HaloObjC : NSObject
 
 /**
- *  开始服务
- *  已经不用主动调用该方法了
- */
-+ (void)server DEPRECATED_ATTRIBUTE;
-
-/**
  *  是否开启 Log（也就是 ccLog），默认值是 YES
  */
 + (void)logEnable:(BOOL)enable;
