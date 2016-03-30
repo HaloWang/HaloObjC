@@ -48,7 +48,7 @@ extern float SystemVersionNumber;
  */
 void Measure(void(^CodeWaitingForMeasure)());
 
-// TODO: ⚠️ Unfinish!
+#pragma mark - GCD
 
 void Async(void(^noUITask)());
 
@@ -145,11 +145,28 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 @end
 
+#pragma mark - UITableView
+
+@interface UITableView (Halo)
+
+/**
+ *  默认使用 class 名作为 reuseIdentifier
+ *
+ *  @param cellClass 要注册的 Cell 类型
+ */
+- (void)hl_registerCellClass:(Class)cellClass;
+
+@end
+
 #pragma mark - UITableViewCell
 
 @interface UITableViewCell (Halo)
 
 + (NSString *)hl_reuseIdentifier;
+
+@end
+
+@interface UITableViewValue1Cell : UITableViewCell
 
 @end
 

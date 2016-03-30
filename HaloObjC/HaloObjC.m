@@ -48,8 +48,19 @@ void Measure(void(^CodeWaitingForMeasure)()) {
     cc([NSString stringWithFormat:@"代码执行时间为 %f 秒", endTime]);
 }
 
+#pragma mark - GCD
+
+dispatch_queue_t HaloObjC_Async_Queue() {
+    static dispatch_queue_t queue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("HaloObjC_Async_Queue", NULL);
+    });
+    return queue;
+}
+
 void Async(void(^noUITask)()) {
-    dispatch_async(dispatch_queue_create("HaloObjC_Async_Queue", NULL), ^{
+    dispatch_async(HaloObjC_Async_Queue(), ^{
         if (noUITask) {
             noUITask();
         }
@@ -57,7 +68,7 @@ void Async(void(^noUITask)()) {
 }
 
 void AsyncFinish(void(^noUITask)(), void(^UITask)()) {
-    dispatch_async(dispatch_queue_create("HaloObjC_Async_Queue", NULL), ^{
+    dispatch_async(HaloObjC_Async_Queue(), ^{
         if (noUITask) {
             noUITask();
         }
@@ -235,12 +246,30 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 
 @end
 
+#pragma mark - UITableView
+
+@implementation UITableView (Halo)
+
+- (void)hl_registerCellClass:(Class)cellClass {
+    [self registerClass:cellClass forCellReuseIdentifier:NSStringFromClass(cellClass)];
+}
+
+@end
+
 #pragma mark - UITableViewCell
 
 @implementation UITableViewCell (Halo)
 
 + (nonnull NSString *)hl_reuseIdentifier {
     return NSStringFromClass([self class]);
+}
+
+@end
+
+@implementation UITableViewValue1Cell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    return [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
 }
 
 @end
