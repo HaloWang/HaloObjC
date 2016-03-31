@@ -50,17 +50,17 @@ void Measure(void(^CodeWaitingForMeasure)()) {
 
 #pragma mark - GCD
 
-dispatch_queue_t HaloObjC_Async_Queue() {
-    static dispatch_queue_t queue;
+dispatch_queue_t _halo_async_queue() {
+    static dispatch_queue_t _halo_async_queue_t;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        queue = dispatch_queue_create("HaloObjC_Async_Queue", NULL);
+        _halo_async_queue_t = dispatch_queue_create("HaloObjC_Async_Queue", NULL);
     });
-    return queue;
+    return _halo_async_queue_t;
 }
 
 void Async(void(^noUITask)()) {
-    dispatch_async(HaloObjC_Async_Queue(), ^{
+    dispatch_async(_halo_async_queue(), ^{
         if (noUITask) {
             noUITask();
         }
@@ -68,7 +68,7 @@ void Async(void(^noUITask)()) {
 }
 
 void AsyncFinish(void(^noUITask)(), void(^UITask)()) {
-    dispatch_async(HaloObjC_Async_Queue(), ^{
+    dispatch_async(_halo_async_queue(), ^{
         if (noUITask) {
             noUITask();
         }
@@ -130,7 +130,7 @@ void ccWarning(id obj) {
 
 @implementation HaloObjC
 
-+ (void)server {
++ (void)_server {
 
     CGRect _screenBounds         = [UIScreen mainScreen].bounds;
     ScreenBounds                 = _screenBounds;
@@ -172,7 +172,7 @@ void ccWarning(id obj) {
 + (void)load {
     [super load];
     //  use this way to avoid forgetting call +server method
-    [HaloObjC server];
+    [HaloObjC _server];
 }
 
 @end
@@ -305,7 +305,7 @@ UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a) {
 
 /// @see http://stackoverflow.com/questions/3805177/how-to-convert-hex-rgb-color-codes-to-uicolor
 
-void SKScanHexColor(NSString *hexString, float *red, float *green, float *blue, float *alpha) {
+void _SKScanHexColor(NSString *hexString, float *red, float *green, float *blue, float *alpha) {
 
     NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
     cc(cleanString);
@@ -330,7 +330,7 @@ void SKScanHexColor(NSString *hexString, float *red, float *green, float *blue, 
 
 UIColor *HEX(NSString *hexString) {
     float red, green, blue, alpha;
-    SKScanHexColor(hexString, &red, &green, &blue, &alpha);
+    _SKScanHexColor(hexString, &red, &green, &blue, &alpha);
     return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 }
 
