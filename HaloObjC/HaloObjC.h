@@ -50,12 +50,35 @@ void Measure(void(^CodeWaitingForMeasure)());
 
 #pragma mark - GCD
 
+/**
+ *  开辟新线程，异步执行
+ *
+ *  @param ^noUITask 一些要做，但是可以放到最后做的事情
+ */
 void Async(void(^noUITask)());
 
+/**
+ *  开启新线程，异步执行，完成后回到主线程执行
+ *
+ *  @param ^noUITask    顾名思义
+ *
+ *  @param ^UITask  顾名思义
+ */
 void AsyncFinish(void(^noUITask)(), void(^UITask)());
 
+/**
+ *  主线程异步执行
+ *
+ *  @param ^UITask 一些要做，而且需要在主线程做，但是可以放到最后做的事情
+ */
 void Last(void(^UITask)());
 
+/**
+ *  延迟执行
+ *
+ *  @param second  延迟多少秒
+ *  @param ^UITask 在主线程中做的事情
+ */
 void After(float second, void(^UITask)());
 
 #pragma mark - Log
