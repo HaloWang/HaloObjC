@@ -174,15 +174,6 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 #pragma mark - UIColor
 
-UIColor *ColorWithRGB(CGFloat r, CGFloat g, CGFloat b);
-UIColor *ColorWithRGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
-
-/**
- *  use hexValue like 0xFFFFFF to create a UIColor object
- */
-UIColor *ColorWithHexValue(NSUInteger hexValue);
-UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a);
-
 /**
  *  use hexValue like @"FFFFFF" (or @"#FFFFFF") to create a UIColor object
  */
