@@ -291,7 +291,6 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 void _SKScanHexColor(NSString *hexString, float *red, float *green, float *blue, float *alpha) {
 
     NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
-    cc(cleanString);
     if ([cleanString length] == 3) {
         cleanString = [NSString stringWithFormat:@"%@%@%@%@%@%@",
                                                  [cleanString substringWithRange:NSMakeRange(0, 1)], [cleanString substringWithRange:NSMakeRange(0, 1)],
