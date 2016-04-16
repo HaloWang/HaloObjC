@@ -38,6 +38,12 @@ extern NSString *AppBuildVersion;
 extern NSString *SystemVersion;
 extern float SystemVersionNumber;
 
+extern BOOL iPhone6P;
+extern BOOL iPhone6;
+extern BOOL iPhone5;
+extern BOOL iPhone4s;
+
+
 #pragma mark - Measure
 
 /**
@@ -122,6 +128,14 @@ void ccWarning(id obj);
 
 @end
 
+#pragma mark - NSString
+
+@interface NSString (Halo)
+
+@property (nonatomic, readonly) NSURL *URL;
+
+@end
+
 #pragma mark - UIView
 
 /// 相当于 CGRectMake
@@ -131,6 +145,8 @@ CGRect RM(CGFloat x, CGFloat y, CGFloat width, CGFloat height);
 CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 @interface UIView (Halo)
+
+- (instancetype)addToSuperview:(UIView *)superview;
 
 /**
  *  设定圆角半径
@@ -192,6 +208,15 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 @interface UICollectionViewCell (Halo)
 
 + (NSString *)hl_reuseIdentifier;
+
+@end
+
+#pragma mark - UINavigatoinController
+
+@interface UINavigationController (Halo)
+
+/// 使用纯色填充 NavigationBar
+- (void)barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor;
 
 @end
 

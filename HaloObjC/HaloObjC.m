@@ -37,6 +37,11 @@ NSString *AppBuildVersion;
 NSString *SystemVersion;
 float SystemVersionNumber;
 
+BOOL iPhone6P;
+BOOL iPhone6;
+BOOL iPhone5;
+BOOL iPhone4s;
+
 #pragma mark - Measure
 
 void Measure(void(^CodeWaitingForMeasure)()) {
@@ -140,6 +145,11 @@ void ccWarning(id obj) {
     NavigationBarHeight          = 64;
     TabBarHeight                 = 49;
     StatusBarHeight              = 20;
+    
+    iPhone6P = ScreenWidth == 414;
+    iPhone6 = ScreenWidth == 375;
+    iPhone5 = ScreenHeight == 568;
+    iPhone4s = ScreenHeight == 480;
 
     HomePath                     = NSHomeDirectory();
     CachePath                    = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
@@ -159,6 +169,8 @@ void ccWarning(id obj) {
 
     SystemVersion                = [UIDevice currentDevice].systemVersion;
     SystemVersionNumber          = SystemVersion.floatValue;
+    
+    
 }
 
 + (void)logEnable:(BOOL)enable {
@@ -177,6 +189,17 @@ void ccWarning(id obj) {
 
 @end
 
+#pragma mark - NSString
+
+@implementation NSString (Halo)
+
+- (NSURL *)URL {
+    return [NSURL URLWithString:self];
+}
+
+@end
+
+
 #pragma mark - UIView
 
 CGRect RM(CGFloat x, CGFloat y, CGFloat width, CGFloat height) {
@@ -188,6 +211,10 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 }
 
 @implementation UIView (Halo)
+
+- (instancetype)addToSuperview:(UIView *)superview {
+    [superview addSubview:self];
+}
 
 - (void)cornerRadius:(CGFloat)radius {
     self.layer.cornerRadius = radius;
@@ -280,6 +307,36 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 
 + (NSString *)hl_reuseIdentifier {
     return NSStringFromClass([self class]);
+}
+
+@end
+
+#pragma mark - UINavigatoinController
+
+@implementation UINavigationController (Halo)
+
+- (void)barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor {
+    
+    UIGraphicsBeginImageContext(CGSizeMake(1, 1));
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextAddRect(ctx, CGRectMake(0, 0, 1, 1));
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
+    CGContextFillPath(ctx);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [self.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    
+    if (tintColor) {
+        self.navigationBar.tintColor = tintColor;
+        self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : tintColor};
+    }
+    
+    if (shadowColor) {
+        // TODO: 未完成
+    } else {
+        self.navigationBar.shadowImage = image;
+    }
 }
 
 @end
