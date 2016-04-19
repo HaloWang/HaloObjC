@@ -199,6 +199,50 @@ void ccWarning(id obj) {
 
 @end
 
+#pragma mark - UIFont
+
+UIFont *hl_systemFontOfSize(CGFloat size) {
+    return [UIFont systemFontOfSize:size];
+}
+
+#pragma mark - UIButton
+
+@implementation UIButton (Halo)
+
+- (UIFont *)hl_titleFont {
+    return self.titleLabel.font;
+}
+
+- (void)setHl_titleFont:(UIFont *)hl_titleFont {
+    self.titleLabel.font = hl_titleFont;
+}
+
+- (UIColor *)hl_normalTitleColor {
+    return [self titleColorForState:UIControlStateNormal];
+}
+
+- (void)setHl_normalTitleColor:(UIColor *)hl_normalTitleColor {
+    [self setTitleColor:hl_normalTitleColor forState:UIControlStateNormal];
+}
+
+- (NSString *)normalTitle {
+    return [self titleForState:UIControlStateNormal];
+}
+
+- (void)setNormalTitle:(NSString *)normalTitle {
+    [self setTitle:normalTitle forState:UIControlStateNormal];
+}
+
++ (UIButton *)custom {
+    return [UIButton buttonWithType:UIButtonTypeCustom];
+}
+
+- (instancetype)addTouchUpInSideTarget:(id)target action:(SEL)action {
+    [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    return self;
+}
+
+@end
 
 #pragma mark - UIView
 
@@ -214,6 +258,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 
 - (instancetype)addToSuperview:(UIView *)superview {
     [superview addSubview:self];
+    return self;
 }
 
 - (void)cornerRadius:(CGFloat)radius {
@@ -241,7 +286,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 
 - (void)setHl_insetBottom:(CGFloat)hl_insetBottom {
     UIEdgeInsets inset = self.contentInset;
-    self.contentInset = UIEdgeInsetsMake(inset.top, inset.bottom, hl_insetBottom, inset.right);
+    self.contentInset = UIEdgeInsetsMake(inset.top, inset.left, hl_insetBottom, inset.right);
 }
 
 - (CGFloat)hl_insetTop {
@@ -250,7 +295,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 
 - (void)setHl_insetTop:(CGFloat)hl_insetTop {
     UIEdgeInsets inset = self.contentInset;
-    self.contentInset = UIEdgeInsetsMake(hl_insetTop, inset.bottom, inset.bottom, inset.right);
+    self.contentInset = UIEdgeInsetsMake(hl_insetTop, inset.left, inset.bottom, inset.right);
 }
 
 - (CGFloat)hl_offsetX {

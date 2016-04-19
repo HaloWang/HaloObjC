@@ -136,6 +136,24 @@ void ccWarning(id obj);
 
 @end
 
+#pragma mark - UIFont
+
+UIFont *hl_systemFontOfSize(CGFloat size);
+
+#pragma mark - UIButton
+
+@interface UIButton (Halo)
+
+@property (nonatomic, strong) UIFont *hl_titleFont;
+@property (nonatomic, strong) UIColor *hl_normalTitleColor;
+@property (nonatomic, strong) NSString *normalTitle;
+
++ (UIButton *)custom;
+
+- (instancetype)addTouchUpInSideTarget:(id)target action:(SEL)action;
+
+@end
+
 #pragma mark - UIView
 
 /// 相当于 CGRectMake
