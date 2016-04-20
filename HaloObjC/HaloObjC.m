@@ -316,6 +316,24 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
     self.contentOffset = CGPointMake(offset.x, hl_offsetY);
 }
 
+- (CGFloat)hl_indicatorTop {
+    return self.scrollIndicatorInsets.top;
+}
+
+- (CGFloat)hl_indicatorBottom {
+    return self.scrollIndicatorInsets.bottom;
+}
+
+- (void)setHl_indicatorTop:(CGFloat)hl_indicatorTop {
+    UIEdgeInsets inset = self.scrollIndicatorInsets;
+    self.scrollIndicatorInsets = UIEdgeInsetsMake(hl_indicatorTop, inset.left, inset.bottom, inset.right);
+}
+
+- (void)setHl_indicatorBottom:(CGFloat)hl_indicatorBottom {
+    UIEdgeInsets inset = self.scrollIndicatorInsets;
+    self.scrollIndicatorInsets = UIEdgeInsetsMake(inset.top, inset.left, hl_indicatorBottom, inset.right);
+}
+
 @end
 
 #pragma mark - UITableView

@@ -190,6 +190,8 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 @property (nonatomic, assign) CGFloat hl_insetTop;
 @property (nonatomic, assign) CGFloat hl_insetBottom;
+@property (nonatomic, assign) CGFloat hl_indicatorTop;
+@property (nonatomic, assign) CGFloat hl_indicatorBottom;
 
 @property (nonatomic, assign) CGFloat hl_offsetX;
 @property (nonatomic, assign) CGFloat hl_offsetY;
