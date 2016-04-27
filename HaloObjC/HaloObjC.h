@@ -235,7 +235,13 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 @interface UINavigationController (Halo)
 
-/// 使用纯色填充 NavigationBar
+/**
+*  使用纯色填充 NavigationBar
+*
+*  @param color       NavigationBar 背景颜色
+*  @param tintColor   NavigationBar 标题颜色
+*  @param shadowColor NavigationBar 下边分割线颜色
+*/
 - (void)barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor;
 
 @end
