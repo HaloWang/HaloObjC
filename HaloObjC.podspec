@@ -1,4 +1,3 @@
-
 Pod::Spec.new do |s|
   s.name         = "HaloObjC"
   s.version      = "0.2.5"
