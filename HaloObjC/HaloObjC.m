@@ -136,7 +136,7 @@ void ccWarning(id obj) {
 @implementation HaloObjC
 
 + (void)_server {
-    
+
     CGRect _screenBounds         = [UIScreen mainScreen].bounds;
     ScreenBounds                 = _screenBounds;
     CGSize _screenSize           = _screenBounds.size;
@@ -145,31 +145,30 @@ void ccWarning(id obj) {
     NavigationBarHeight          = 64;
     TabBarHeight                 = 49;
     StatusBarHeight              = 20;
-    
+
     iPhone6P                     = ScreenWidth == 414;
     iPhone6                      = ScreenWidth == 375;
     iPhone5                      = ScreenHeight == 568;
     iPhone4s                     = ScreenHeight == 480;
-    
+
     HomePath                     = NSHomeDirectory();
     CachePath                    = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
     DocumentPath                 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     LibraryPath                  = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)[0];
     TempPath                     = NSTemporaryDirectory();
-    
+
     NSBundle *mainBundle         = [NSBundle mainBundle];
     MainBundlePath               = [mainBundle bundlePath];
     ResourcePath                 = [mainBundle resourcePath];
     ExecutablePath               = [mainBundle executablePath];
-    
+
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     AppBundleID                  = infoDictionary[@"CFBundleIdentifier"];
     AppVersion                   = infoDictionary[@"CFBundleShortVersionString"];
     AppBuildVersion              = infoDictionary[@"CFBundleVersion"];
-    
+
     SystemVersion                = [UIDevice currentDevice].systemVersion;
     SystemVersionNumber          = SystemVersion.floatValue;
-    
     
 }
 
@@ -269,7 +268,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
     self.layer.masksToBounds = true;
     self.layer.borderWidth = borderWidth;
     self.layer.borderColor = borderColor.CGColor;
-    
+
 }
 
 @end
@@ -377,7 +376,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 @implementation UINavigationController (Halo)
 
 - (void)barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor {
-    
+
     UIGraphicsBeginImageContext(CGSizeMake(1, 1));
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextAddRect(ctx, CGRectMake(0, 0, 1, 1));
@@ -385,16 +384,16 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
     CGContextFillPath(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     if (color) {
         [self.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     }
-    
+
     if (tintColor) {
         self.navigationBar.tintColor = tintColor;
         self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : tintColor};
     }
-    
+
     if (shadowColor) {
         // TODO: 未完成
     } else {
@@ -409,7 +408,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 /// @see http://stackoverflow.com/questions/3805177/how-to-convert-hex-rgb-color-codes-to-uicolor
 
 void _SKScanHexColor(NSString *hexString, float *red, float *green, float *blue, float *alpha) {
-    
+
     NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
     if ([cleanString length] == 3) {
         cleanString = [NSString stringWithFormat:@"%@%@%@%@%@%@",
@@ -420,10 +419,10 @@ void _SKScanHexColor(NSString *hexString, float *red, float *green, float *blue,
     if ([cleanString length] == 6) {
         cleanString = [cleanString stringByAppendingString:@"ff"];
     }
-    
+
     unsigned int baseValue;
     [[NSScanner scannerWithString:cleanString] scanHexInt:&baseValue];
-    
+
     if (red) {*red = ((baseValue >> 24) & 0xFF) / 255.0f;}
     if (green) {*green = ((baseValue >> 16) & 0xFF) / 255.0f;}
     if (blue) {*blue = ((baseValue >> 8) & 0xFF) / 255.0f;}

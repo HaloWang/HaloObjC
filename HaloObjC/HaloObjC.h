@@ -260,5 +260,3 @@ UIColor *RGB(CGFloat r, CGFloat g, CGFloat b);
  *  @param a 0~1.0
  */
 UIColor *RGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
-
-
