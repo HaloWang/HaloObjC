@@ -38,10 +38,10 @@ extern NSString *AppBuildVersion;
 extern NSString *SystemVersion;
 extern float SystemVersionNumber;
 
-extern BOOL iPhone6P;
-extern BOOL iPhone6;
-extern BOOL iPhone5;
-extern BOOL iPhone4s;
+extern BOOL iPhone5_5;
+extern BOOL iPhone4_7;
+extern BOOL iPhone4_0;
+extern BOOL iPhone3_5;
 
 
 #pragma mark - Measure
@@ -77,7 +77,7 @@ void AsyncFinish(void(^noUITask)(), void(^UITask)());
  *
  *  @param ^UITask 一些要做，而且需要在主线程做，但是可以放到最后做的事情
  */
-void Last(void(^UITask)());
+void hl_last(void(^UITask)());
 
 /**
  *  延迟执行
@@ -85,7 +85,15 @@ void Last(void(^UITask)());
  *  @param second  延迟多少秒
  *  @param ^UITask 在主线程中做的事情
  */
-void After(float second, void(^UITask)());
+void hl_after(float second, void(^UITask)());
+
+
+/**
+ 后台线程执行
+
+ @param ^noUITask 非 UI 任务
+ */
+void hl_background(void(^noUITask)());
 
 #pragma mark - Log
 
@@ -126,6 +134,16 @@ void ccWarning(id obj);
  */
 + (void)logEnable:(BOOL)enable;
 
+/**
+ *  如果要使用 HaloObjC 该方法必须被调用
+ */
++ (void)server;
+
+/**
+ *  调用 ccError 时的回调
+ */
++ (void)setCCErrorFunctionCallBack:(void(^)(NSString *displayInfo))callBack;
+
 @end
 
 #pragma mark - NSString
@@ -133,6 +151,8 @@ void ccWarning(id obj);
 @interface NSString (Halo)
 
 @property (nonatomic, readonly) NSURL *URL;
+
+@property (nonatomic, readonly) NSDictionary *hl_jsonDictionary;
 
 @end
 
@@ -146,7 +166,7 @@ UIFont *hl_systemFontOfSize(CGFloat size);
 
 @property (nonatomic, strong) UIFont *hl_titleFont;
 @property (nonatomic, strong) UIColor *hl_normalTitleColor;
-@property (nonatomic, strong) NSString *normalTitle;
+@property (nonatomic, strong) NSString *hl_normalTitle;
 
 + (UIButton *)custom;
 
@@ -161,6 +181,9 @@ CGRect RM(CGFloat x, CGFloat y, CGFloat width, CGFloat height);
 
 /// 创建一个水平居中（相对于屏幕）的 CGRect 值
 CGRect CM(CGFloat y, CGFloat width, CGFloat height);
+
+/// 像素对齐
+CGFloat pixelIntegral(CGFloat value);
 
 @interface UIView (Halo)
 
@@ -217,6 +240,8 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 
 + (NSString *)hl_reuseIdentifier;
 
+- (instancetype)selectionStyle:(UITableViewCellSelectionStyle)style;
+
 @end
 
 @interface UITableViewValue1Cell : UITableViewCell
@@ -249,9 +274,14 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 #pragma mark - UIColor
 
 /**
- *  use hexValue like @"FFFFFF" (or @"#FFFFFF") to create a UIColor object
+ *  use hexstring like @"FFFFFF" (or @"#FFFFFF") to create a UIColor object
  */
-UIColor *HEX(NSString *hexString);
+UIColor *HEXStr(NSString *hexString);
+
+/**
+ *  use hexValue like 0xFFFFFF to create a UIColor object
+ */
+UIColor *HEX(NSUInteger hex);
 
 UIColor *RGB(CGFloat r, CGFloat g, CGFloat b);
 
@@ -260,3 +290,5 @@ UIColor *RGB(CGFloat r, CGFloat g, CGFloat b);
  *  @param a 0~1.0
  */
 UIColor *RGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
+
+UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a);

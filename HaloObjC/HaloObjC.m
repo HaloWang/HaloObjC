@@ -37,10 +37,12 @@ NSString *AppBuildVersion;
 NSString *SystemVersion;
 float SystemVersionNumber;
 
-BOOL iPhone6P;
-BOOL iPhone6;
-BOOL iPhone5;
-BOOL iPhone4s;
+void(^CCErrorCallBackBlock)();
+
+BOOL iPhone5_5;
+BOOL iPhone4_7;
+BOOL iPhone4_0;
+BOOL iPhone3_5;
 
 #pragma mark - Measure
 
@@ -85,7 +87,7 @@ void AsyncFinish(void(^noUITask)(), void(^UITask)()) {
     });
 }
 
-void Last(void(^UITask)()) {
+void hl_last(void(^UITask)()) {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (UITask) {
             UITask();
@@ -93,10 +95,18 @@ void Last(void(^UITask)()) {
     });
 }
 
-void After(float second, void(^UITask)()) {
+void hl_after(float second, void(^UITask)()) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (second * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (UITask) {
             UITask();
+        }
+    });
+}
+
+void hl_background(void(^noUITask)()) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (noUITask) {
+            noUITask();
         }
     });
 }
@@ -120,6 +130,9 @@ void ccRight(id obj) {
 }
 
 void ccError(id obj) {
+    if (CCErrorCallBackBlock) {
+        CCErrorCallBackBlock([obj description] ?: @"NULL");
+    }
     if (!CCLogEnable) {
         return;
     }
@@ -135,7 +148,7 @@ void ccWarning(id obj) {
 
 @implementation HaloObjC
 
-+ (void)_server {
++ (void)server {
 
     CGRect _screenBounds         = [UIScreen mainScreen].bounds;
     ScreenBounds                 = _screenBounds;
@@ -145,11 +158,11 @@ void ccWarning(id obj) {
     NavigationBarHeight          = 64;
     TabBarHeight                 = 49;
     StatusBarHeight              = 20;
-
-    iPhone6P                     = ScreenWidth == 414;
-    iPhone6                      = ScreenWidth == 375;
-    iPhone5                      = ScreenHeight == 568;
-    iPhone4s                     = ScreenHeight == 480;
+    
+    iPhone5_5 = ScreenWidth == 414;
+    iPhone4_7 = ScreenWidth == 375;
+    iPhone4_0 = ScreenHeight == 568;
+    iPhone3_5 = ScreenHeight == 480;
 
     HomePath                     = NSHomeDirectory();
     CachePath                    = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
@@ -172,16 +185,13 @@ void ccWarning(id obj) {
     
 }
 
-+ (void)logEnable:(BOOL)enable {
-    CCLogEnable = enable;
++ (void)setCCErrorFunctionCallBack:(void (^)(NSString *))callBack {
+    CCErrorCallBackBlock = callBack;
 }
 
-@end
-
-@implementation UIScreen (HaloObjC)
-
-+ (void)load {
-    [HaloObjC _server];
++ (void)logEnable:(BOOL)enable {
+    
+    CCLogEnable = enable;
 }
 
 @end
@@ -192,6 +202,15 @@ void ccWarning(id obj) {
 
 - (NSURL *)URL {
     return [NSURL URLWithString:self];
+}
+
+- (NSDictionary *)hl_jsonDictionary {
+    NSError *err;
+    NSDictionary *_dic = [NSJSONSerialization JSONObjectWithData:[self dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:&err];
+    if (err) {
+        ccWarning(err);
+    }
+    return _dic;
 }
 
 @end
@@ -222,16 +241,16 @@ UIFont *hl_systemFontOfSize(CGFloat size) {
     [self setTitleColor:hl_normalTitleColor forState:UIControlStateNormal];
 }
 
-- (NSString *)normalTitle {
+- (NSString *)hl_normalTitle {
     return [self titleForState:UIControlStateNormal];
 }
 
-- (void)setNormalTitle:(NSString *)normalTitle {
-    [self setTitle:normalTitle forState:UIControlStateNormal];
+- (void)setHl_normalTitle:(NSString *)hl_normalTitle {
+    [self setTitle:hl_normalTitle forState:UIControlStateNormal];
 }
 
 + (UIButton *)custom {
-    return [UIButton buttonWithType:UIButtonTypeCustom];
+    return [self buttonWithType:UIButtonTypeCustom];
 }
 
 - (instancetype)addTouchUpInSideTarget:(id)target action:(SEL)action {
@@ -249,6 +268,11 @@ CGRect RM(CGFloat x, CGFloat y, CGFloat width, CGFloat height) {
 
 CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
     return RM((ScreenWidth - width) / 2, y, width, height);
+}
+
+CGFloat PixelIntegral(CGFloat value) {
+    CGFloat screenScale = [UIScreen mainScreen].scale;
+    return round(value * screenScale / screenScale);
 }
 
 @implementation UIView (Halo)
@@ -351,6 +375,11 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
     return NSStringFromClass([self class]);
 }
 
+- (instancetype)selectionStyle:(UITableViewCellSelectionStyle)style {
+    self.selectionStyle = style;
+    return self;
+}
+
 @end
 
 @implementation UITableViewValue1Cell
@@ -376,7 +405,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 @implementation UINavigationController (Halo)
 
 - (void)barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor {
-
+    
     UIGraphicsBeginImageContext(CGSizeMake(1, 1));
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextAddRect(ctx, CGRectMake(0, 0, 1, 1));
@@ -384,16 +413,18 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
     CGContextFillPath(ctx);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
+    
     if (color) {
         [self.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     }
-
+    
     if (tintColor) {
         self.navigationBar.tintColor = tintColor;
-        self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : tintColor};
+        NSMutableDictionary *newDictionary = [NSMutableDictionary dictionaryWithDictionary:self.navigationBar.titleTextAttributes];
+        [newDictionary setObject:tintColor forKey:NSForegroundColorAttributeName];
+        self.navigationBar.titleTextAttributes = newDictionary;
     }
-
+    
     if (shadowColor) {
         // TODO: 未完成
     } else {
@@ -408,7 +439,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
 /// @see http://stackoverflow.com/questions/3805177/how-to-convert-hex-rgb-color-codes-to-uicolor
 
 void _SKScanHexColor(NSString *hexString, float *red, float *green, float *blue, float *alpha) {
-
+    
     NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
     if ([cleanString length] == 3) {
         cleanString = [NSString stringWithFormat:@"%@%@%@%@%@%@",
@@ -419,20 +450,24 @@ void _SKScanHexColor(NSString *hexString, float *red, float *green, float *blue,
     if ([cleanString length] == 6) {
         cleanString = [cleanString stringByAppendingString:@"ff"];
     }
-
+    
     unsigned int baseValue;
     [[NSScanner scannerWithString:cleanString] scanHexInt:&baseValue];
-
+    
     if (red) {*red = ((baseValue >> 24) & 0xFF) / 255.0f;}
     if (green) {*green = ((baseValue >> 16) & 0xFF) / 255.0f;}
     if (blue) {*blue = ((baseValue >> 8) & 0xFF) / 255.0f;}
     if (alpha) {*alpha = ((baseValue >> 0) & 0xFF) / 255.0f;}
 }
 
-UIColor *HEX(NSString *hexString) {
+UIColor *HEXStr(NSString *hexString) {
     float red, green, blue, alpha;
     _SKScanHexColor(hexString, &red, &green, &blue, &alpha);
     return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
+
+UIColor *HEX(NSUInteger hex) {
+    return [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16))/255.0 green:((float)((hex & 0xFF00) >> 8))/255.0 blue:((float)(hex & 0xFF))/255.0 alpha:1.0];
 }
 
 UIColor *RGB(CGFloat r, CGFloat g, CGFloat b) {
@@ -441,4 +476,8 @@ UIColor *RGB(CGFloat r, CGFloat g, CGFloat b) {
 
 UIColor *RGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a) {
     return [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:a];
+}
+
+UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a) {
+    return [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:a];
 }
