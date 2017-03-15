@@ -249,6 +249,14 @@ UIFont *hl_systemFontOfSize(CGFloat size) {
     [self setTitle:hl_normalTitle forState:UIControlStateNormal];
 }
 
+- (UIImage *)hl_normalImage {
+    return [self imageForState:UIControlStateNormal];
+}
+
+- (void)setHl_normalImage:(UIImage *)hl_normalImage {
+    [self setImage:hl_normalImage forState:UIControlStateNormal];
+}
+
 + (UIButton *)custom {
     return [self buttonWithType:UIButtonTypeCustom];
 }
@@ -270,12 +278,16 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height) {
     return RM((ScreenWidth - width) / 2, y, width, height);
 }
 
-CGFloat PixelIntegral(CGFloat value) {
+CGFloat pixelIntegral(CGFloat value) {
     CGFloat screenScale = [UIScreen mainScreen].scale;
     return round(value * screenScale / screenScale);
 }
 
 @implementation UIView (Halo)
+
++ (instancetype)addToSuperview:(UIView *)superview {
+    return [[self new] addToSuperview:superview];
+}
 
 - (instancetype)addToSuperview:(UIView *)superview {
     [superview addSubview:self];
@@ -386,6 +398,15 @@ CGFloat PixelIntegral(CGFloat value) {
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     return [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
+}
+
+@end
+
+
+@implementation UICollectionView (Halo)
+
+- (void)hl_registerCellClass:(Class)cellClass {
+    [self registerClass:cellClass forCellWithReuseIdentifier:NSStringFromClass(cellClass)];
 }
 
 @end

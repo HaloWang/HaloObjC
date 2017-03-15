@@ -167,6 +167,7 @@ UIFont *hl_systemFontOfSize(CGFloat size);
 @property (nonatomic, strong) UIFont *hl_titleFont;
 @property (nonatomic, strong) UIColor *hl_normalTitleColor;
 @property (nonatomic, strong) NSString *hl_normalTitle;
+@property (nonatomic, strong) UIImage *hl_normalImage;
 
 + (UIButton *)custom;
 
@@ -186,6 +187,8 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 CGFloat pixelIntegral(CGFloat value);
 
 @interface UIView (Halo)
+
++ (instancetype)addToSuperview:(UIView *)superview;
 
 - (instancetype)addToSuperview:(UIView *)superview;
 
@@ -248,6 +251,14 @@ CGFloat pixelIntegral(CGFloat value);
 
 @end
 
+#pragma mark - UICollectionView
+
+@interface UICollectionView (Halo)
+
+- (void)hl_registerCellClass:(Class)cellClass;
+
+@end
+
 #pragma mark - UICollectionViewCell
 
 @interface UICollectionViewCell (Halo)
@@ -283,11 +294,23 @@ UIColor *HEXStr(NSString *hexString);
  */
 UIColor *HEX(NSUInteger hex);
 
+
+/**
+ RGB
+
+ @param r 0~255
+ @param g 0~255
+ @param b 0~255
+ */
 UIColor *RGB(CGFloat r, CGFloat g, CGFloat b);
 
 /**
- *  带有 alpha 的 RGB
- *  @param a 0~1.0
+ 带有 alpha 的 RGB
+
+ @param r 0~255
+ @param g 0~255
+ @param b 0~255
+ @param a 0~1
  */
 UIColor *RGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
 

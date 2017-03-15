@@ -6,9 +6,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   HaloObjC:
-    :path: ./HaloObjC
+    :path: "./HaloObjC"
 
 SPEC CHECKSUMS:
-  HaloObjC: e0ed5039fdebd6eb2971db2927eaee63ae90faf6
+  HaloObjC: c85239b48d7d34dc1a4ffdd9848cae12d52930c1
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: bb2ab879ec6d6e319efca396ab115a302ab4137a
+
+COCOAPODS: 1.2.0
