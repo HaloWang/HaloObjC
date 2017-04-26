@@ -22,7 +22,7 @@
     UIView *aView = [[UIView alloc] initWithFrame:CM(200, 200, 100)];
     
     Measure(^{
-        aView.backgroundColor = HEX(@"#FFBB44");
+        aView.backgroundColor = HEXStr(@"#FFBB44");
     });
     
     ccRight(@(ScreenWidth));
