@@ -146,10 +146,21 @@ void ccWarning(id obj) {
     printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"⚠️", [obj description]] UTF8String]);
 }
 
+
+#pragma mark - App
+
+UIViewController *hl_applicationRootViewController() {
+    return [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+}
+
+UIWindow *hl_applicationWindow() {
+    return [[[UIApplication sharedApplication] delegate] window];
+}
+
 @implementation HaloObjC
 
 + (void)server {
-
+    
     CGRect _screenBounds         = [UIScreen mainScreen].bounds;
     ScreenBounds                 = _screenBounds;
     CGSize _screenSize           = _screenBounds.size;
@@ -163,23 +174,23 @@ void ccWarning(id obj) {
     iPhone4_7 = ScreenWidth == 375;
     iPhone4_0 = ScreenHeight == 568;
     iPhone3_5 = ScreenHeight == 480;
-
+    
     HomePath                     = NSHomeDirectory();
     CachePath                    = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
     DocumentPath                 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     LibraryPath                  = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)[0];
     TempPath                     = NSTemporaryDirectory();
-
+    
     NSBundle *mainBundle         = [NSBundle mainBundle];
     MainBundlePath               = [mainBundle bundlePath];
     ResourcePath                 = [mainBundle resourcePath];
     ExecutablePath               = [mainBundle executablePath];
-
+    
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     AppBundleID                  = infoDictionary[@"CFBundleIdentifier"];
     AppVersion                   = infoDictionary[@"CFBundleShortVersionString"];
     AppBuildVersion              = infoDictionary[@"CFBundleVersion"];
-
+    
     SystemVersion                = [UIDevice currentDevice].systemVersion;
     SystemVersionNumber          = SystemVersion.floatValue;
     
@@ -214,6 +225,86 @@ void ccWarning(id obj) {
 }
 
 @end
+
+#pragma mark - MutableDeepCopying
+
+@implementation NSDictionary (MutableDeepCopy)
+- (NSMutableDictionary *)hl_mutableDeepCopy {
+    NSMutableDictionary * returnDict = [[NSMutableDictionary alloc] initWithCapacity:self.count];
+    NSArray * keys = [self allKeys];
+    for(id key in keys) {
+        id aValue = [self objectForKey:key];
+        id theCopy = nil;
+        if([aValue conformsToProtocol:@protocol(MutableDeepCopying)]) {
+            theCopy = [aValue hl_mutableDeepCopy];
+        } else if([aValue conformsToProtocol:@protocol(NSMutableCopying)]) {
+            theCopy = [aValue mutableCopy];
+        } else if([aValue conformsToProtocol:@protocol(NSCopying)]){
+            theCopy = [aValue copy];
+        } else {
+            theCopy = aValue;
+        }
+        [returnDict setValue:theCopy forKey:key];
+    }
+    return returnDict;
+}
+@end
+
+@implementation NSArray (MutableDeepCopy)
+-(NSMutableArray *)hl_mutableDeepCopy {
+    NSMutableArray *returnArray = [[NSMutableArray alloc] initWithCapacity:self.count];
+    for(id aValue in self) {
+        id theCopy = nil;
+        if([aValue conformsToProtocol:@protocol(MutableDeepCopying)]) {
+            theCopy = [aValue hl_mutableDeepCopy];
+        } else if([aValue conformsToProtocol:@protocol(NSMutableCopying)]) {
+            theCopy = [aValue mutableCopy];
+        } else if([aValue conformsToProtocol:@protocol(NSCopying)]){
+            theCopy = [aValue copy];
+        } else {
+            theCopy = aValue;
+        }
+        [returnArray addObject:theCopy];
+    }
+    return returnArray;
+}
+@end
+
+#pragma mark - SandBox
+
+long long hl_sizeOfFolder(NSString *folderPath) {
+    NSArray *folderContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:nil];
+    __block unsigned long long int folderSize = 0;
+    
+    [folderContents enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSString *_filePath = [folderPath stringByAppendingPathComponent:obj];
+        NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:_filePath error:nil];
+        
+        if ([fileAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+            folderSize += hl_sizeOfFolder(_filePath);
+        } else {
+            folderSize += [[fileAttributes objectForKey:NSFileSize] intValue];
+        }
+    }];
+    return folderSize;
+}
+
+NSString *hl_sizeStringOfSize(long long size) {
+    NSString *sizeString = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleFile];
+    return sizeString;
+}
+
+NSString *hl_sizeStringOfFolder(NSString *folderPath) {
+    NSArray *folderContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:nil];
+    __block unsigned long long int folderSize = 0;
+    
+    [folderContents enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[folderPath stringByAppendingPathComponent:obj] error:nil];
+        folderSize += [[fileAttributes objectForKey:NSFileSize] intValue];
+    }];
+    NSString *folderSizeStr = hl_sizeStringOfSize(folderSize);
+    return folderSizeStr;
+}
 
 #pragma mark - UIFont
 
@@ -261,8 +352,19 @@ UIFont *hl_systemFontOfSize(CGFloat size) {
     return [self buttonWithType:UIButtonTypeCustom];
 }
 
-- (instancetype)addTouchUpInSideTarget:(id)target action:(SEL)action {
+- (instancetype)hl_touchUpInSideTarget:(id)target action:(SEL)action {
     [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    return self;
+}
+
+@end
+
+#pragma mark - UIViewController
+
+@implementation UIViewController (Halo)
+
+- (instancetype)title:(NSString *)title {
+    self.title = title;
     return self;
 }
 
@@ -294,17 +396,17 @@ CGFloat pixelIntegral(CGFloat value) {
     return self;
 }
 
-- (void)cornerRadius:(CGFloat)radius {
+- (void)hl_cornerRadius:(CGFloat)radius {
     self.layer.cornerRadius = radius;
     self.layer.masksToBounds = YES;
 }
 
-- (void)cornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor {
+- (void)hl_cornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor {
     self.layer.cornerRadius = radius;
     self.layer.masksToBounds = true;
     self.layer.borderWidth = borderWidth;
     self.layer.borderColor = borderColor.CGColor;
-
+    
 }
 
 @end
@@ -425,7 +527,7 @@ CGFloat pixelIntegral(CGFloat value) {
 
 @implementation UINavigationController (Halo)
 
-- (void)barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor {
+- (void)hl_barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor {
     
     UIGraphicsBeginImageContext(CGSizeMake(1, 1));
     CGContextRef ctx = UIGraphicsGetCurrentContext();
@@ -447,11 +549,19 @@ CGFloat pixelIntegral(CGFloat value) {
     }
     
     if (shadowColor) {
-        // TODO: 未完成
+        UIGraphicsBeginImageContext(CGSizeMake(1, 1));
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextAddRect(ctx, CGRectMake(0, 0, 1, 1));
+        CGContextSetFillColorWithColor(ctx, shadowColor.CGColor);
+        CGContextFillPath(ctx);
+        self.navigationBar.shadowImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
     } else {
         self.navigationBar.shadowImage = image;
     }
 }
+
 
 @end
 

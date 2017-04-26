@@ -125,6 +125,12 @@ void ccError(id obj);
  */
 void ccWarning(id obj);
 
+#pragma mark - App
+
+UIViewController *hl_applicationRootViewController();
+
+UIWindow *hl_applicationWindow();
+
 #pragma mark - HaloObjC
 
 @interface HaloObjC : NSObject
@@ -156,6 +162,28 @@ void ccWarning(id obj);
 
 @end
 
+#pragma mark - MutableDeepCopying
+
+@protocol MutableDeepCopying <NSObject>
+
+-(id)hl_mutableDeepCopy;
+
+@end
+
+@interface NSDictionary (MutableDeepCopy) <MutableDeepCopying>
+@end
+
+@interface NSArray (MutableDeepCopy) <MutableDeepCopying>
+@end
+
+#pragma mark - SandBox
+
+long long hl_sizeOfFolder(NSString *folderPath);
+
+NSString *hl_sizeStringOfSize(long long size);
+
+NSString *hl_sizeStringOfFolder(NSString *folderPath);
+
 #pragma mark - UIFont
 
 UIFont *hl_systemFontOfSize(CGFloat size);
@@ -171,7 +199,15 @@ UIFont *hl_systemFontOfSize(CGFloat size);
 
 + (UIButton *)custom;
 
-- (instancetype)addTouchUpInSideTarget:(id)target action:(SEL)action;
+- (instancetype)hl_touchUpInSideTarget:(id)target action:(SEL)action;
+
+@end
+
+#pragma mark - UIViewController
+
+@interface UIViewController (Halo)
+
+- (instancetype)title:(NSString *)title;
 
 @end
 
@@ -197,7 +233,7 @@ CGFloat pixelIntegral(CGFloat value);
  *
  *  @param radius 圆角半径
  */
-- (void)cornerRadius:(CGFloat)radius;
+- (void)hl_cornerRadius:(CGFloat)radius;
 
 /**
  *  同时设定 圆角半径 描边宽度 描边颜色
@@ -206,7 +242,7 @@ CGFloat pixelIntegral(CGFloat value);
  *  @param borderWidth 描边宽度
  *  @param borderColor 描边颜色
  */
-- (void)cornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor;
+- (void)hl_cornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor;
 
 @end
 
@@ -278,7 +314,7 @@ CGFloat pixelIntegral(CGFloat value);
 *  @param tintColor   NavigationBar 标题颜色
 *  @param shadowColor NavigationBar 下边分割线颜色
 */
-- (void)barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor;
+- (void)hl_barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor;
 
 @end
 
