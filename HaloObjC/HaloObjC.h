@@ -50,7 +50,7 @@ extern BOOL iPhone3_5;
  *  测量某段代码的执行时间
  *  你不用考虑 block 执行的线程
  *
- *  @param ^CodeWaitingForMeasure 你想测量的代码
+ *  @param CodeWaitingForMeasure 你想测量的代码
  */
 void Measure(void(^CodeWaitingForMeasure)());
 
@@ -59,31 +59,31 @@ void Measure(void(^CodeWaitingForMeasure)());
 /**
  *  开辟新线程，异步执行
  *
- *  @param ^noUITask 一些要做，但是可以放到最后做的事情
+ *  @param noUITask 一些要做，但是可以放到最后做的事情
  */
 void Async(void(^noUITask)());
 
 /**
  *  开启新线程，异步执行，完成后回到主线程执行
  *
- *  @param ^noUITask    顾名思义
+ *  @param noUITask    顾名思义
  *
- *  @param ^UITask  顾名思义
+ *  @param UITask  顾名思义
  */
 void AsyncFinish(void(^noUITask)(), void(^UITask)());
 
 /**
  *  主线程异步执行
  *
- *  @param ^UITask 一些要做，而且需要在主线程做，但是可以放到最后做的事情
+ *  @param UITask 一些要做，而且需要在主线程做，但是可以放到最后做的事情
  */
 void hl_last(void(^UITask)());
 
 /**
- *  延迟执行
+ *
  *
  *  @param second  延迟多少秒
- *  @param ^UITask 在主线程中做的事情
+ *  @param UITask 在主线程中做的事情
  */
 void hl_after(float second, void(^UITask)());
 
@@ -91,8 +91,9 @@ void hl_after(float second, void(^UITask)());
 /**
  后台线程执行
 
- @param ^noUITask 非 UI 任务
+ @param noUITask 非 UI 任务
  */
+
 void hl_background(void(^noUITask)());
 
 #pragma mark - Log
