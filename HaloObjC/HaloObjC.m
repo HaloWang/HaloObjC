@@ -306,6 +306,29 @@ NSString *hl_sizeStringOfFolder(NSString *folderPath) {
     return folderSizeStr;
 }
 
+void hl_fetchSizeOfFolder(NSString *folderPath, void(^finished)(long long sizeOfFolder)) {
+    hl_background(^{
+        NSArray *folderContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:nil];
+        __block unsigned long long int folderSize = 0;
+        
+        [folderContents enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *_filePath = [folderPath stringByAppendingPathComponent:obj];
+            NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:_filePath error:nil];
+            
+            if ([fileAttributes[NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                folderSize += hl_sizeOfFolder(_filePath);
+            } else {
+                folderSize += [[fileAttributes objectForKey:NSFileSize] intValue];
+            }
+        }];
+        hl_last(^{
+            if (finished) {
+                finished(folderSize);
+            }
+        });
+    });
+}
+
 #pragma mark - UIFont
 
 UIFont *hl_systemFontOfSize(CGFloat size) {
@@ -431,6 +454,24 @@ CGFloat pixelIntegral(CGFloat value) {
 - (void)setHl_insetTop:(CGFloat)hl_insetTop {
     UIEdgeInsets inset = self.contentInset;
     self.contentInset = UIEdgeInsetsMake(hl_insetTop, inset.left, inset.bottom, inset.right);
+}
+
+- (CGFloat)hl_insetLeft {
+    return self.contentInset.left;
+}
+
+- (void)setHl_insetLeft:(CGFloat)hl_insetLeft {
+    UIEdgeInsets inset = self.contentInset;
+    self.contentInset = UIEdgeInsetsMake(inset.top, hl_insetLeft, inset.bottom, inset.right);
+}
+
+- (CGFloat)hl_insetRight {
+    return self.contentInset.right;
+}
+
+- (void)setHl_insetRight:(CGFloat)hl_insetRight {
+    UIEdgeInsets inset = self.contentInset;
+    self.contentInset = UIEdgeInsetsMake(inset.top, inset.right, inset.bottom, hl_insetRight);
 }
 
 - (CGFloat)hl_offsetX {

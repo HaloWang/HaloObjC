@@ -185,6 +185,8 @@ NSString *hl_sizeStringOfSize(long long size);
 
 NSString *hl_sizeStringOfFolder(NSString *folderPath);
 
+void hl_fetchSizeOfFolder(NSString *folderPath, void(^finished)(long long sizeOfFolder));
+
 #pragma mark - UIFont
 
 UIFont *hl_systemFontOfSize(CGFloat size);
@@ -253,6 +255,8 @@ CGFloat pixelIntegral(CGFloat value);
 
 @property (nonatomic, assign) CGFloat hl_insetTop;
 @property (nonatomic, assign) CGFloat hl_insetBottom;
+@property (nonatomic, assign) CGFloat hl_insetLeft;
+@property (nonatomic, assign) CGFloat hl_insetRight;
 @property (nonatomic, assign) CGFloat hl_indicatorTop;
 @property (nonatomic, assign) CGFloat hl_indicatorBottom;
 
