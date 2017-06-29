@@ -321,6 +321,8 @@ CGFloat pixelIntegral(CGFloat value);
 */
 - (void)hl_barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor;
 
++ (UINavigationController *)root:(UIViewController *)rootVC;
+
 @end
 
 #pragma mark - UIColor
