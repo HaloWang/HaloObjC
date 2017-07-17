@@ -603,7 +603,7 @@ CGFloat pixelIntegral(CGFloat value) {
     }
 }
 
-+ (UINavigationController *)root:(UIViewController *)rootVC {
++ (instancetype)root:(UIViewController *)rootVC {
     return [[UINavigationController alloc] initWithRootViewController:rootVC];
 }
 
