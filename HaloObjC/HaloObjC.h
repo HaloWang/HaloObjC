@@ -338,6 +338,8 @@ UIColor *HEXStr(NSString *hexString);
 UIColor *HEX(NSUInteger hex);
 
 
+#ifndef RGB
+
 /**
  RGB
 
@@ -346,6 +348,10 @@ UIColor *HEX(NSUInteger hex);
  @param b 0~255
  */
 UIColor *RGB(CGFloat r, CGFloat g, CGFloat b);
+
+#endif
+
+#ifndef RGBA
 
 /**
  带有 alpha 的 RGB
@@ -357,4 +363,10 @@ UIColor *RGB(CGFloat r, CGFloat g, CGFloat b);
  */
 UIColor *RGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
 
+#endif
+
+#ifndef ColorWithHexValueA
+
 UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a);
+
+#endif
