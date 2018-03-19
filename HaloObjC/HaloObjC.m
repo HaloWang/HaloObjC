@@ -43,6 +43,8 @@ BOOL iPhone5_5;
 BOOL iPhone4_7;
 BOOL iPhone4_0;
 BOOL iPhone3_5;
+BOOL iPhoneX;
+BOOL iPhone5_8;
 
 #pragma mark - Measure
 
@@ -174,6 +176,8 @@ UIWindow *hl_applicationWindow() {
     iPhone4_7 = ScreenWidth == 375;
     iPhone4_0 = ScreenHeight == 568;
     iPhone3_5 = ScreenHeight == 480;
+    iPhoneX = ScreenWidth == 375 && ScreenHeight == 812;
+    iPhone5_8 = iPhoneX;
     
     HomePath                     = NSHomeDirectory();
     CachePath                    = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];

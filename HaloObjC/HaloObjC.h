@@ -42,7 +42,8 @@ extern BOOL iPhone5_5;
 extern BOOL iPhone4_7;
 extern BOOL iPhone4_0;
 extern BOOL iPhone3_5;
-
+extern BOOL iPhoneX;
+extern BOOL iPhone5_8;
 
 #pragma mark - Measure
 
