@@ -53,7 +53,7 @@ extern BOOL iPhone5_8;
  *
  *  @param CodeWaitingForMeasure 你想测量的代码
  */
-void Measure(void(^CodeWaitingForMeasure)());
+void Measure(void(^CodeWaitingForMeasure)(void));
 
 #pragma mark - GCD
 
@@ -62,7 +62,7 @@ void Measure(void(^CodeWaitingForMeasure)());
  *
  *  @param noUITask 一些要做，但是可以放到最后做的事情
  */
-void Async(void(^noUITask)());
+void Async(void(^noUITask)(void));
 
 /**
  *  开启新线程，异步执行，完成后回到主线程执行
@@ -71,14 +71,14 @@ void Async(void(^noUITask)());
  *
  *  @param UITask  顾名思义
  */
-void AsyncFinish(void(^noUITask)(), void(^UITask)());
+void AsyncFinish(void(^noUITask)(void), void(^UITask)(void));
 
 /**
  *  主线程异步执行
  *
  *  @param UITask 一些要做，而且需要在主线程做，但是可以放到最后做的事情
  */
-void hl_last(void(^UITask)());
+void hl_last(void(^UITask)(void));
 
 /**
  *
@@ -86,7 +86,7 @@ void hl_last(void(^UITask)());
  *  @param second  延迟多少秒
  *  @param UITask 在主线程中做的事情
  */
-void hl_after(float second, void(^UITask)());
+void hl_after(float second, void(^UITask)(void));
 
 
 /**
@@ -95,7 +95,7 @@ void hl_after(float second, void(^UITask)());
  @param noUITask 非 UI 任务
  */
 
-void hl_background(void(^noUITask)());
+void hl_background(void(^noUITask)(void));
 
 #pragma mark - Log
 
@@ -129,9 +129,9 @@ void ccWarning(id obj);
 
 #pragma mark - App
 
-UIViewController *hl_applicationRootViewController();
+UIViewController *hl_applicationRootViewController(void);
 
-UIWindow *hl_applicationWindow();
+UIWindow *hl_applicationWindow(void);
 
 #pragma mark - HaloObjC
 

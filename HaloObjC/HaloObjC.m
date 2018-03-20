@@ -37,7 +37,7 @@ NSString *AppBuildVersion;
 NSString *SystemVersion;
 float SystemVersionNumber;
 
-void(^CCErrorCallBackBlock)();
+void(^CCErrorCallBackBlock)(NSString *);
 
 BOOL iPhone5_5;
 BOOL iPhone4_7;
@@ -48,7 +48,7 @@ BOOL iPhone5_8;
 
 #pragma mark - Measure
 
-void Measure(void(^CodeWaitingForMeasure)()) {
+void Measure(void(^CodeWaitingForMeasure)(void)) {
     NSDate *startTime = [NSDate date];
     if (CodeWaitingForMeasure) {
         CodeWaitingForMeasure();
@@ -68,7 +68,7 @@ dispatch_queue_t _halo_async_queue() {
     return _halo_async_queue_t;
 }
 
-void Async(void(^noUITask)()) {
+void Async(void(^noUITask)(void)) {
     dispatch_async(_halo_async_queue(), ^{
         if (noUITask) {
             noUITask();
@@ -76,7 +76,7 @@ void Async(void(^noUITask)()) {
     });
 }
 
-void AsyncFinish(void(^noUITask)(), void(^UITask)()) {
+void AsyncFinish(void(^noUITask)(void), void(^UITask)(void)) {
     dispatch_async(_halo_async_queue(), ^{
         if (noUITask) {
             noUITask();
@@ -89,7 +89,7 @@ void AsyncFinish(void(^noUITask)(), void(^UITask)()) {
     });
 }
 
-void hl_last(void(^UITask)()) {
+void hl_last(void(^UITask)(void)) {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (UITask) {
             UITask();
@@ -97,7 +97,7 @@ void hl_last(void(^UITask)()) {
     });
 }
 
-void hl_after(float second, void(^UITask)()) {
+void hl_after(float second, void(^UITask)(void)) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (second * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (UITask) {
             UITask();
@@ -105,7 +105,7 @@ void hl_after(float second, void(^UITask)()) {
     });
 }
 
-void hl_background(void(^noUITask)()) {
+void hl_background(void(^noUITask)(void)) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (noUITask) {
             noUITask();
