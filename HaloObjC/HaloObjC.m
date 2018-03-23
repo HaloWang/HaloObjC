@@ -13,6 +13,7 @@ CGRect ScreenBounds;
 CGFloat ScreenWidth;
 CGFloat ScreenHeight;
 CGFloat NavigationBarHeight;
+CGFloat BottomSafeHeightForIPhoneX;
 CGFloat TabBarHeight;
 CGFloat StatusBarHeight;
 
@@ -168,9 +169,6 @@ UIWindow *hl_applicationWindow() {
     CGSize _screenSize           = _screenBounds.size;
     ScreenHeight                 = _screenSize.height;
     ScreenWidth                  = _screenSize.width;
-    NavigationBarHeight          = 64;
-    TabBarHeight                 = 49;
-    StatusBarHeight              = 20;
     
     iPhone5_5 = ScreenWidth == 414;
     iPhone4_7 = ScreenWidth == 375;
@@ -178,6 +176,11 @@ UIWindow *hl_applicationWindow() {
     iPhone3_5 = ScreenHeight == 480;
     iPhoneX = ScreenWidth == 375 && ScreenHeight == 812;
     iPhone5_8 = iPhoneX;
+    
+    NavigationBarHeight          = 64 + (iPhoneX ? 24 : 0);
+    BottomSafeHeightForIPhoneX   = iPhoneX ? 34 : 0;
+    TabBarHeight                 = 49;
+    StatusBarHeight              = 20;
     
     HomePath                     = NSHomeDirectory();
     CachePath                    = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];

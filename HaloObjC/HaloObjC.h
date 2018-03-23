@@ -14,6 +14,7 @@ extern CGRect  ScreenBounds;
 extern CGFloat ScreenWidth;
 extern CGFloat ScreenHeight;
 extern CGFloat NavigationBarHeight;
+extern CGFloat BottomSafeHeightForIPhoneX;
 extern CGFloat TabBarHeight;
 extern CGFloat StatusBarHeight;
 
