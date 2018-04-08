@@ -9,7 +9,8 @@
 #import "HaloObjC.h"
 
 #pragma mark - 固定尺寸
-CGRect ScreenBounds;
+CGRect  ScreenBounds;
+CGRect  ScreenBoundsWithoutNavigationBar;
 CGFloat ScreenWidth;
 CGFloat ScreenHeight;
 CGFloat NavigationBarHeight;
@@ -174,13 +175,14 @@ UIWindow *hl_applicationWindow() {
     iPhone4_7 = ScreenWidth == 375;
     iPhone4_0 = ScreenHeight == 568;
     iPhone3_5 = ScreenHeight == 480;
-    iPhoneX = ScreenWidth == 375 && ScreenHeight == 812;
+    iPhoneX   = ScreenWidth == 375 && ScreenHeight == 812;
     iPhone5_8 = iPhoneX;
     
-    NavigationBarHeight          = 64 + (iPhoneX ? 24 : 0);
-    BottomSafeHeightForIPhoneX   = iPhoneX ? 34 : 0;
-    TabBarHeight                 = 49;
-    StatusBarHeight              = 20;
+    NavigationBarHeight              = 64 + (iPhoneX ? 24 : 0);
+    BottomSafeHeightForIPhoneX       = iPhoneX ? 34 : 0;
+    TabBarHeight                     = 49;
+    StatusBarHeight                  = 20;
+    ScreenBoundsWithoutNavigationBar = CGRectMake(0, 0, ScreenWidth, ScreenHeight - NavigationBarHeight);
     
     HomePath                     = NSHomeDirectory();
     CachePath                    = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
@@ -620,6 +622,8 @@ CGFloat pixelIntegral(CGFloat value) {
 
 /// @see http://stackoverflow.com/questions/3805177/how-to-convert-hex-rgb-color-codes-to-uicolor
 
+#ifndef HEXStr
+
 void _SKScanHexColor(NSString *hexString, float *red, float *green, float *blue, float *alpha) {
     
     NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
@@ -648,9 +652,14 @@ UIColor *HEXStr(NSString *hexString) {
     return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 }
 
+#endif
+
+#ifndef HEX
+
 UIColor *HEX(NSUInteger hex) {
     return [UIColor colorWithRed:((float)((hex & 0xFF0000) >> 16))/255.0 green:((float)((hex & 0xFF00) >> 8))/255.0 blue:((float)(hex & 0xFF))/255.0 alpha:1.0];
 }
+#endif
 
 #ifndef RGB
 

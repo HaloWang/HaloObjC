@@ -11,6 +11,7 @@
 
 #pragma mark - 固定尺寸
 extern CGRect  ScreenBounds;
+extern CGRect  ScreenBoundsWithoutNavigationBar;
 extern CGFloat ScreenWidth;
 extern CGFloat ScreenHeight;
 extern CGFloat NavigationBarHeight;
@@ -329,16 +330,22 @@ CGFloat pixelIntegral(CGFloat value);
 
 #pragma mark - UIColor
 
+#ifndef HEXStr
 /**
  *  use hexstring like @"FFFFFF" (or @"#FFFFFF") to create a UIColor object
  */
 UIColor *HEXStr(NSString *hexString);
 
+#endif
+
+
+#ifndef HEX
 /**
  *  use hexValue like 0xFFFFFF to create a UIColor object
  */
 UIColor *HEX(NSUInteger hex);
 
+#endif
 
 #ifndef RGB
 

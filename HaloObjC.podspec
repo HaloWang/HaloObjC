@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "HaloObjC"
-  s.version      = "0.3.9"
+  s.version      = "1.0.0"
   s.summary      = "My own iOS development kit."
   s.homepage     = "https://github.com/HaloWang/HaloObjC"
   s.license      = { :type => "MIT", :file => "LICENSE" }
