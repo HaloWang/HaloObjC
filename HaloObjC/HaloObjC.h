@@ -10,42 +10,42 @@
 #import <UIKit/UIKit.h>
 
 #pragma mark - 固定尺寸
-extern CGRect  ScreenBounds;
-extern CGRect  ScreenBoundsWithoutNavigationBar;
-extern CGFloat ScreenWidth;
-extern CGFloat ScreenHeight;
-extern CGFloat NavigationBarHeight;
-extern CGFloat BottomSafeHeightForIPhoneX;
-extern CGFloat TabBarHeight;
-extern CGFloat StatusBarHeight;
+extern CGRect  ScreenBounds NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern CGRect  ScreenBoundsWithoutNavigationBar NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern CGFloat ScreenWidth NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern CGFloat ScreenHeight NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern CGFloat NavigationBarHeight NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern CGFloat BottomSafeHeightForIPhoneX NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern CGFloat TabBarHeight NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern CGFloat StatusBarHeight NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - 沙盒路径
-extern NSString *HomePath;
-extern NSString *DocumentPath;
-extern NSString *LibraryPath;
-extern NSString *CachePath;
-extern NSString *TempPath;
+extern NSString *HomePath NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern NSString *DocumentPath NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern NSString *LibraryPath NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern NSString *CachePath NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern NSString *TempPath NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - Bundle
-extern NSString *MainBundlePath;
-extern NSString *ResourcePath;
-extern NSString *ExecutablePath;
+extern NSString *MainBundlePath NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern NSString *ResourcePath NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern NSString *ExecutablePath NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - 应用信息
-extern NSString *AppBundleID;
-extern NSString *AppVersion;
-extern NSString *AppBuildVersion;
+extern NSString *AppBundleID NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern NSString *AppVersion NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern NSString *AppBuildVersion NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - 系统信息
-extern NSString *SystemVersion;
-extern float SystemVersionNumber;
+extern NSString *SystemVersion NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern float SystemVersionNumber NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-extern BOOL iPhone5_5;
-extern BOOL iPhone4_7;
-extern BOOL iPhone4_0;
-extern BOOL iPhone3_5;
-extern BOOL iPhoneX;
-extern BOOL iPhone5_8;
+extern BOOL iPhone5_5 NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern BOOL iPhone4_7 NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern BOOL iPhone4_0 NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern BOOL iPhone3_5 NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern BOOL iPhoneX NS_SWIFT_UNAVAILABLE("Use Halo instead");
+extern BOOL iPhone5_8 NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - Measure
 
@@ -55,7 +55,7 @@ extern BOOL iPhone5_8;
  *
  *  @param CodeWaitingForMeasure 你想测量的代码
  */
-void Measure(void(^CodeWaitingForMeasure)(void));
+void Measure(void(^CodeWaitingForMeasure)(void)) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - GCD
 
@@ -64,7 +64,7 @@ void Measure(void(^CodeWaitingForMeasure)(void));
  *
  *  @param noUITask 一些要做，但是可以放到最后做的事情
  */
-void Async(void(^noUITask)(void));
+void Async(void(^noUITask)(void)) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /**
  *  开启新线程，异步执行，完成后回到主线程执行
@@ -73,14 +73,14 @@ void Async(void(^noUITask)(void));
  *
  *  @param UITask  顾名思义
  */
-void AsyncFinish(void(^noUITask)(void), void(^UITask)(void));
+void AsyncFinish(void(^noUITask)(void), void(^UITask)(void)) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /**
  *  主线程异步执行
  *
  *  @param UITask 一些要做，而且需要在主线程做，但是可以放到最后做的事情
  */
-void hl_last(void(^UITask)(void));
+void hl_last(void(^UITask)(void)) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /**
  *
@@ -88,7 +88,7 @@ void hl_last(void(^UITask)(void));
  *  @param second  延迟多少秒
  *  @param UITask 在主线程中做的事情
  */
-void hl_after(float second, void(^UITask)(void));
+void hl_after(float second, void(^UITask)(void)) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 
 /**
@@ -97,7 +97,7 @@ void hl_after(float second, void(^UITask)(void));
  @param noUITask 非 UI 任务
  */
 
-void hl_background(void(^noUITask)(void));
+void hl_background(void(^noUITask)(void)) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - Log
 
@@ -106,34 +106,34 @@ void hl_background(void(^noUITask)(void));
  *
  *  @param obj Something you wants to print
  */
-void cc(id obj);
+void cc(id obj) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /**
  *  简化 NSLog 调用
  *
  *  @param obj Something you wants to print with ✅
  */
-void ccRight(id obj);
+void ccRight(id obj) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /**
  *  简化 NSLog 调用
  *
  *  @param obj Something you wants to print with ❌
  */
-void ccError(id obj);
+void ccError(id obj) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /**
  *  简化 NSLog 调用
  *
  *  @param obj Something you wants to print with ⚠️
  */
-void ccWarning(id obj);
+void ccWarning(id obj) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - App
 
-UIViewController *hl_applicationRootViewController(void);
+UIViewController *hl_applicationRootViewController(void) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-UIWindow *hl_applicationWindow(void);
+UIWindow *hl_applicationWindow(void) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - HaloObjC
 
@@ -142,17 +142,17 @@ UIWindow *hl_applicationWindow(void);
 /**
  *  是否开启 Log（也就是 ccLog），默认值是 YES
  */
-+ (void)logEnable:(BOOL)enable;
++ (void)logEnable:(BOOL)enable NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /**
  *  如果要使用 HaloObjC 该方法必须被调用
  */
-+ (void)server;
++ (void)server NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /**
  *  调用 ccError 时的回调
  */
-+ (void)setCCErrorFunctionCallBack:(void(^)(NSString *displayInfo))callBack;
++ (void)setCCErrorFunctionCallBack:(void(^)(NSString *displayInfo))callBack NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -160,9 +160,9 @@ UIWindow *hl_applicationWindow(void);
 
 @interface NSString (Halo)
 
-@property (nonatomic, readonly) NSURL *URL;
+@property (nonatomic, readonly) NSURL *URL NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-@property (nonatomic, readonly) NSDictionary *hl_jsonDictionary;
+@property (nonatomic, readonly) NSDictionary *hl_jsonDictionary NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -170,7 +170,7 @@ UIWindow *hl_applicationWindow(void);
 
 @protocol MutableDeepCopying <NSObject>
 
--(id)hl_mutableDeepCopy;
+-(id)hl_mutableDeepCopy NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -182,30 +182,30 @@ UIWindow *hl_applicationWindow(void);
 
 #pragma mark - SandBox
 
-long long hl_sizeOfFolder(NSString *folderPath);
+long long hl_sizeOfFolder(NSString *folderPath) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-NSString *hl_sizeStringOfSize(long long size);
+NSString *hl_sizeStringOfSize(long long size) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-NSString *hl_sizeStringOfFolder(NSString *folderPath);
+NSString *hl_sizeStringOfFolder(NSString *folderPath) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-void hl_fetchSizeOfFolder(NSString *folderPath, void(^finished)(long long sizeOfFolder));
+void hl_fetchSizeOfFolder(NSString *folderPath, void(^finished)(long long sizeOfFolder)) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - UIFont
 
-UIFont *hl_systemFontOfSize(CGFloat size);
+UIFont *hl_systemFontOfSize(CGFloat size) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #pragma mark - UIButton
 
 @interface UIButton (Halo)
 
-@property (nonatomic, strong) UIFont *hl_titleFont;
-@property (nonatomic, strong) UIColor *hl_normalTitleColor;
-@property (nonatomic, strong) NSString *hl_normalTitle;
-@property (nonatomic, strong) UIImage *hl_normalImage;
+@property (nonatomic, strong) UIFont *hl_titleFont NS_SWIFT_UNAVAILABLE("Use Halo instead");
+@property (nonatomic, strong) UIColor *hl_normalTitleColor NS_SWIFT_UNAVAILABLE("Use Halo instead");
+@property (nonatomic, strong) NSString *hl_normalTitle NS_SWIFT_UNAVAILABLE("Use Halo instead");
+@property (nonatomic, strong) UIImage *hl_normalImage NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-+ (UIButton *)custom;
++ (UIButton *)custom NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-- (instancetype)hl_touchUpInSideTarget:(id)target action:(SEL)action;
+- (instancetype)hl_touchUpInSideTarget:(id)target action:(SEL)action NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -213,33 +213,33 @@ UIFont *hl_systemFontOfSize(CGFloat size);
 
 @interface UIViewController (Halo)
 
-- (instancetype)title:(NSString *)title;
+- (instancetype)title:(NSString *)title NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
 #pragma mark - UIView
 
 /// 相当于 CGRectMake
-CGRect RM(CGFloat x, CGFloat y, CGFloat width, CGFloat height);
+CGRect RM(CGFloat x, CGFloat y, CGFloat width, CGFloat height) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /// 创建一个水平居中（相对于屏幕）的 CGRect 值
-CGRect CM(CGFloat y, CGFloat width, CGFloat height);
+CGRect CM(CGFloat y, CGFloat width, CGFloat height) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /// 像素对齐
-CGFloat pixelIntegral(CGFloat value);
+CGFloat pixelIntegral(CGFloat value) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @interface UIView (Halo)
 
-+ (instancetype)addToSuperview:(UIView *)superview;
++ (instancetype)addToSuperview:(UIView *)superview NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-- (instancetype)addToSuperview:(UIView *)superview;
+- (instancetype)addToSuperview:(UIView *)superview NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /**
  *  设定圆角半径
  *
  *  @param radius 圆角半径
  */
-- (void)hl_cornerRadius:(CGFloat)radius;
+- (void)hl_cornerRadius:(CGFloat)radius NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 /**
  *  同时设定 圆角半径 描边宽度 描边颜色
@@ -248,7 +248,7 @@ CGFloat pixelIntegral(CGFloat value);
  *  @param borderWidth 描边宽度
  *  @param borderColor 描边颜色
  */
-- (void)hl_cornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor;
+- (void)hl_cornerRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -256,15 +256,15 @@ CGFloat pixelIntegral(CGFloat value);
 
 @interface UIScrollView (Halo)
 
-@property (nonatomic, assign) CGFloat hl_insetTop;
-@property (nonatomic, assign) CGFloat hl_insetBottom;
-@property (nonatomic, assign) CGFloat hl_insetLeft;
-@property (nonatomic, assign) CGFloat hl_insetRight;
-@property (nonatomic, assign) CGFloat hl_indicatorTop;
-@property (nonatomic, assign) CGFloat hl_indicatorBottom;
+@property (nonatomic, assign) CGFloat hl_insetTop NS_SWIFT_UNAVAILABLE("Use Halo instead");
+@property (nonatomic, assign) CGFloat hl_insetBottom NS_SWIFT_UNAVAILABLE("Use Halo instead");
+@property (nonatomic, assign) CGFloat hl_insetLeft NS_SWIFT_UNAVAILABLE("Use Halo instead");
+@property (nonatomic, assign) CGFloat hl_insetRight NS_SWIFT_UNAVAILABLE("Use Halo instead");
+@property (nonatomic, assign) CGFloat hl_indicatorTop NS_SWIFT_UNAVAILABLE("Use Halo instead");
+@property (nonatomic, assign) CGFloat hl_indicatorBottom NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-@property (nonatomic, assign) CGFloat hl_offsetX;
-@property (nonatomic, assign) CGFloat hl_offsetY;
+@property (nonatomic, assign) CGFloat hl_offsetX NS_SWIFT_UNAVAILABLE("Use Halo instead");
+@property (nonatomic, assign) CGFloat hl_offsetY NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -277,7 +277,7 @@ CGFloat pixelIntegral(CGFloat value);
  *
  *  @param cellClass 要注册的 Cell 类型
  */
-- (void)hl_registerCellClass:(Class)cellClass;
+- (void)hl_registerCellClass:(Class)cellClass NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -285,9 +285,9 @@ CGFloat pixelIntegral(CGFloat value);
 
 @interface UITableViewCell (Halo)
 
-+ (NSString *)hl_reuseIdentifier;
++ (NSString *)hl_reuseIdentifier NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-- (instancetype)selectionStyle:(UITableViewCellSelectionStyle)style;
+- (instancetype)selectionStyle:(UITableViewCellSelectionStyle)style NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -299,7 +299,7 @@ CGFloat pixelIntegral(CGFloat value);
 
 @interface UICollectionView (Halo)
 
-- (void)hl_registerCellClass:(Class)cellClass;
+- (void)hl_registerCellClass:(Class)cellClass NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -307,7 +307,7 @@ CGFloat pixelIntegral(CGFloat value);
 
 @interface UICollectionViewCell (Halo)
 
-+ (NSString *)hl_reuseIdentifier;
++ (NSString *)hl_reuseIdentifier NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -322,9 +322,9 @@ CGFloat pixelIntegral(CGFloat value);
 *  @param tintColor   NavigationBar 标题颜色
 *  @param shadowColor NavigationBar 下边分割线颜色
 */
-- (void)hl_barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor;
+- (void)hl_barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
-+ (instancetype)root:(UIViewController *)rootVC;
++ (instancetype)root:(UIViewController *)rootVC NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 @end
 
@@ -334,7 +334,7 @@ CGFloat pixelIntegral(CGFloat value);
 /**
  *  use hexstring like @"FFFFFF" (or @"#FFFFFF") to create a UIColor object
  */
-UIColor *HEXStr(NSString *hexString);
+UIColor *HEXStr(NSString *hexString) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #endif
 
@@ -343,7 +343,7 @@ UIColor *HEXStr(NSString *hexString);
 /**
  *  use hexValue like 0xFFFFFF to create a UIColor object
  */
-UIColor *HEX(NSUInteger hex);
+UIColor *HEX(NSUInteger hex) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #endif
 
@@ -356,7 +356,7 @@ UIColor *HEX(NSUInteger hex);
  @param g 0~255
  @param b 0~255
  */
-UIColor *RGB(CGFloat r, CGFloat g, CGFloat b);
+UIColor *RGB(CGFloat r, CGFloat g, CGFloat b) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #endif
 
@@ -370,12 +370,12 @@ UIColor *RGB(CGFloat r, CGFloat g, CGFloat b);
  @param b 0~255
  @param a 0~1
  */
-UIColor *RGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
+UIColor *RGBA(CGFloat r, CGFloat g, CGFloat b, CGFloat a) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #endif
 
 #ifndef ColorWithHexValueA
 
-UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a);
+UIColor *ColorWithHexValueA(NSUInteger hexValue, CGFloat a) NS_SWIFT_UNAVAILABLE("Use Halo instead");
 
 #endif
