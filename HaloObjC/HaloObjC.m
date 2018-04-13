@@ -529,6 +529,15 @@ CGFloat pixelIntegral(CGFloat value) {
     [self registerClass:cellClass forCellReuseIdentifier:NSStringFromClass(cellClass)];
 }
 
+- (void)disableCellReuseInViewController:(UIViewController *)viewController {
+    CGFloat additionValue = 10000.f;
+    CGRect frame = CGRectMake(self.frame.origin.x, -additionValue, self.frame.size.width, self.frame.size.height + additionValue * 2);
+    self.frame = frame;
+    viewController.automaticallyAdjustsScrollViewInsets = NO;
+    self.hl_insetTop = additionValue;
+    self.hl_insetBottom = -additionValue;
+}
+
 @end
 
 #pragma mark - UITableViewCell
