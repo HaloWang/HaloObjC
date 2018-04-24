@@ -171,10 +171,10 @@ UIWindow *hl_applicationWindow() {
     ScreenHeight                 = _screenSize.height;
     ScreenWidth                  = _screenSize.width;
     
-    iPhone5_5 = ScreenWidth == 414;
-    iPhone4_7 = ScreenWidth == 375;
-    iPhone4_0 = ScreenHeight == 568;
-    iPhone3_5 = ScreenHeight == 480;
+    iPhone3_5 = ScreenWidth == 320 && ScreenHeight == 480;
+    iPhone4_0 = ScreenWidth == 320 && ScreenHeight == 568;
+    iPhone4_7 = ScreenWidth == 375 && ScreenHeight == 667;
+    iPhone5_5 = ScreenWidth == 414 && ScreenHeight == 736;
     iPhoneX   = ScreenWidth == 375 && ScreenHeight == 812;
     iPhone5_8 = iPhoneX;
     
