@@ -60,22 +60,6 @@ void Measure(void(^CodeWaitingForMeasure)(void));
 #pragma mark - GCD
 
 /**
- *  开辟新线程，异步执行
- *
- *  @param noUITask 一些要做，但是可以放到最后做的事情
- */
-void Async(void(^noUITask)(void));
-
-/**
- *  开启新线程，异步执行，完成后回到主线程执行
- *
- *  @param noUITask    顾名思义
- *
- *  @param UITask  顾名思义
- */
-void AsyncFinish(void(^noUITask)(void), void(^UITask)(void));
-
-/**
  *  主线程异步执行
  *
  *  @param UITask 一些要做，而且需要在主线程做，但是可以放到最后做的事情
@@ -158,7 +142,7 @@ UIWindow *hl_applicationWindow(void);
 
 #pragma mark - NSString
 
-@interface NSString (Halo)
+@interface NSString (HaloObjC)
 
 @property (nonatomic, readonly) NSURL *URL;
 
@@ -196,7 +180,7 @@ UIFont *hl_systemFontOfSize(CGFloat size);
 
 #pragma mark - UIButton
 
-@interface UIButton (Halo)
+@interface UIButton (HaloObjC)
 
 @property (nonatomic, strong) UIFont *hl_titleFont;
 @property (nonatomic, strong) UIColor *hl_normalTitleColor;
@@ -211,7 +195,7 @@ UIFont *hl_systemFontOfSize(CGFloat size);
 
 #pragma mark - UIViewController
 
-@interface UIViewController (Halo)
+@interface UIViewController (HaloObjC)
 
 - (instancetype)title:(NSString *)title;
 
@@ -228,7 +212,7 @@ CGRect CM(CGFloat y, CGFloat width, CGFloat height);
 /// 像素对齐
 CGFloat pixelIntegral(CGFloat value);
 
-@interface UIView (Halo)
+@interface UIView (HaloObjC)
 
 + (instancetype)addToSuperview:(UIView *)superview;
 
@@ -254,7 +238,7 @@ CGFloat pixelIntegral(CGFloat value);
 
 #pragma mark - UIScrollView
 
-@interface UIScrollView (Halo)
+@interface UIScrollView (HaloObjC)
 
 @property (nonatomic, assign) CGFloat hl_insetTop;
 @property (nonatomic, assign) CGFloat hl_insetBottom;
@@ -270,7 +254,7 @@ CGFloat pixelIntegral(CGFloat value);
 
 #pragma mark - UITableView
 
-@interface UITableView (Halo)
+@interface UITableView (HaloObjC)
 
 /**
  *  默认使用 class 名作为 reuseIdentifier
@@ -291,7 +275,7 @@ CGFloat pixelIntegral(CGFloat value);
 
 #pragma mark - UITableViewCell
 
-@interface UITableViewCell (Halo)
+@interface UITableViewCell (HaloObjC)
 
 + (NSString *)hl_reuseIdentifier;
 
@@ -305,7 +289,7 @@ CGFloat pixelIntegral(CGFloat value);
 
 #pragma mark - UICollectionView
 
-@interface UICollectionView (Halo)
+@interface UICollectionView (HaloObjC)
 
 - (void)hl_registerCellClass:(Class)cellClass;
 
@@ -313,7 +297,7 @@ CGFloat pixelIntegral(CGFloat value);
 
 #pragma mark - UICollectionViewCell
 
-@interface UICollectionViewCell (Halo)
+@interface UICollectionViewCell (HaloObjC)
 
 + (NSString *)hl_reuseIdentifier;
 
@@ -321,7 +305,7 @@ CGFloat pixelIntegral(CGFloat value);
 
 #pragma mark - UINavigatoinController
 
-@interface UINavigationController (Halo)
+@interface UINavigationController (HaloObjC)
 
 /**
 *  使用纯色填充 NavigationBar
@@ -333,6 +317,14 @@ CGFloat pixelIntegral(CGFloat value);
 - (void)hl_barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor;
 
 + (instancetype)root:(UIViewController *)rootVC;
+
+@end
+
+#pragma mark - UIImage
+
+@interface UIImage (HaloObjC)
+
++ (UIImage *)hl_imageWithColor:(UIColor *)color size:(CGSize)size;
 
 @end
 

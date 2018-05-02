@@ -61,36 +61,6 @@ void Measure(void(^CodeWaitingForMeasure)(void)) {
 
 #pragma mark - GCD
 
-dispatch_queue_t _halo_async_queue() {
-    static dispatch_queue_t _halo_async_queue_t;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _halo_async_queue_t = dispatch_queue_create("HaloObjC_Async_Queue", NULL);
-    });
-    return _halo_async_queue_t;
-}
-
-void Async(void(^noUITask)(void)) {
-    dispatch_async(_halo_async_queue(), ^{
-        if (noUITask) {
-            noUITask();
-        }
-    });
-}
-
-void AsyncFinish(void(^noUITask)(void), void(^UITask)(void)) {
-    dispatch_async(_halo_async_queue(), ^{
-        if (noUITask) {
-            noUITask();
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (UITask) {
-                UITask();
-            }
-        });
-    });
-}
-
 void hl_last(void(^UITask)(void)) {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (UITask) {
@@ -117,7 +87,7 @@ void hl_background(void(^noUITask)(void)) {
 
 #pragma mark - Log
 
-BOOL CCLogEnable = YES;
+static BOOL CCLogEnable = YES;
 
 void cc(id obj) {
     if (!CCLogEnable) {
@@ -218,7 +188,7 @@ UIWindow *hl_applicationWindow() {
 
 #pragma mark - NSString
 
-@implementation NSString (Halo)
+@implementation NSString (HaloObjC)
 
 - (NSURL *)URL {
     return [NSURL URLWithString:self];
@@ -346,7 +316,7 @@ UIFont *hl_systemFontOfSize(CGFloat size) {
 
 #pragma mark - UIButton
 
-@implementation UIButton (Halo)
+@implementation UIButton (HaloObjC)
 
 - (UIFont *)hl_titleFont {
     return self.titleLabel.font;
@@ -393,7 +363,7 @@ UIFont *hl_systemFontOfSize(CGFloat size) {
 
 #pragma mark - UIViewController
 
-@implementation UIViewController (Halo)
+@implementation UIViewController (HaloObjC)
 
 - (instancetype)title:(NSString *)title {
     self.title = title;
@@ -417,7 +387,7 @@ CGFloat pixelIntegral(CGFloat value) {
     return round(value * screenScale / screenScale);
 }
 
-@implementation UIView (Halo)
+@implementation UIView (HaloObjC)
 
 + (instancetype)addToSuperview:(UIView *)superview {
     return [[self new] addToSuperview:superview];
@@ -445,7 +415,7 @@ CGFloat pixelIntegral(CGFloat value) {
 
 #pragma mark - UIScrollView
 
-@implementation UIScrollView (Halo)
+@implementation UIScrollView (HaloObjC)
 
 - (CGFloat)hl_insetBottom {
     return self.contentInset.bottom;
@@ -523,7 +493,7 @@ CGFloat pixelIntegral(CGFloat value) {
 
 #pragma mark - UITableView
 
-@implementation UITableView (Halo)
+@implementation UITableView (HaloObjC)
 
 - (void)hl_registerCellClass:(Class)cellClass {
     [self registerClass:cellClass forCellReuseIdentifier:NSStringFromClass(cellClass)];
@@ -542,7 +512,7 @@ CGFloat pixelIntegral(CGFloat value) {
 
 #pragma mark - UITableViewCell
 
-@implementation UITableViewCell (Halo)
+@implementation UITableViewCell (HaloObjC)
 
 + (nonnull NSString *)hl_reuseIdentifier {
     return NSStringFromClass([self class]);
@@ -564,7 +534,7 @@ CGFloat pixelIntegral(CGFloat value) {
 @end
 
 
-@implementation UICollectionView (Halo)
+@implementation UICollectionView (HaloObjC)
 
 - (void)hl_registerCellClass:(Class)cellClass {
     [self registerClass:cellClass forCellWithReuseIdentifier:NSStringFromClass(cellClass)];
@@ -574,7 +544,7 @@ CGFloat pixelIntegral(CGFloat value) {
 
 #pragma mark - UICollectionViewCell
 
-@implementation UICollectionViewCell (Halo)
+@implementation UICollectionViewCell (HaloObjC)
 
 + (NSString *)hl_reuseIdentifier {
     return NSStringFromClass([self class]);
@@ -584,17 +554,11 @@ CGFloat pixelIntegral(CGFloat value) {
 
 #pragma mark - UINavigatoinController
 
-@implementation UINavigationController (Halo)
+@implementation UINavigationController (HaloObjC)
 
 - (void)hl_barUseColor:(UIColor *)color tintColor:(UIColor *)tintColor shadowColor:(UIColor *)shadowColor {
     
-    UIGraphicsBeginImageContext(CGSizeMake(1, 1));
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextAddRect(ctx, CGRectMake(0, 0, 1, 1));
-    CGContextSetFillColorWithColor(ctx, color.CGColor);
-    CGContextFillPath(ctx);
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    UIImage *image = [UIImage hl_imageWithColor:color size:CGSizeMake(1, 1)];
     
     if (color) {
         [self.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
@@ -603,19 +567,12 @@ CGFloat pixelIntegral(CGFloat value) {
     if (tintColor) {
         self.navigationBar.tintColor = tintColor;
         NSMutableDictionary *newDictionary = [NSMutableDictionary dictionaryWithDictionary:self.navigationBar.titleTextAttributes];
-        [newDictionary setObject:tintColor forKey:NSForegroundColorAttributeName];
+        newDictionary[NSForegroundColorAttributeName] = tintColor;
         self.navigationBar.titleTextAttributes = newDictionary;
     }
     
     if (shadowColor) {
-        UIGraphicsBeginImageContext(CGSizeMake(1, 1));
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-        CGContextAddRect(ctx, CGRectMake(0, 0, 1, 1));
-        CGContextSetFillColorWithColor(ctx, shadowColor.CGColor);
-        CGContextFillPath(ctx);
-        self.navigationBar.shadowImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
+        self.navigationBar.shadowImage = [UIImage hl_imageWithColor:shadowColor size:CGSizeMake(1, 1)];
     } else {
         self.navigationBar.shadowImage = image;
     }
@@ -626,6 +583,24 @@ CGFloat pixelIntegral(CGFloat value) {
 }
 
 @end
+
+#pragma mark - UIImage
+
+@implementation UIImage (HaloObjC)
+
++ (UIImage *)hl_imageWithColor:(UIColor *)color size:(CGSize)size {
+    UIGraphicsBeginImageContext(size);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextAddRect(ctx, CGRectMake(0, 0, size.width, size.height));
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
+    CGContextFillPath(ctx);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+@end
+
 
 #pragma mark - UIColor
 

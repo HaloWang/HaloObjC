@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <HaloObjC/HaloObjC.h>
 
 @interface AppDelegate ()
 
@@ -16,6 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [HaloObjC server];
     return YES;
 }
 

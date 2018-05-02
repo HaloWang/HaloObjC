@@ -19,16 +19,20 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    UIView *aView = [[UIView alloc] initWithFrame:CM(200, 200, 100)];
-    
+
+    [self title:@"HaloObjC DEMO"];
+    [self.navigationController hl_barUseColor:HEX(0xFF3355) tintColor:UIColor.whiteColor shadowColor:nil];
+
     Measure(^{
+        UIView *aView = [[UIView alloc] initWithFrame:CM(200, 200, 100)];
         aView.backgroundColor = HEXStr(@"#FFBB44");
+        [self.view addSubview:aView];
     });
     
     ccRight(@(ScreenWidth));
     
-    [self.view addSubview:aView];
-    
+    UIImage *testImage = [UIImage hl_imageWithColor:HEX(0x345678) size:CGSizeMake(200, 300)];
+    ccRight(testImage);
 }
 
 @end
