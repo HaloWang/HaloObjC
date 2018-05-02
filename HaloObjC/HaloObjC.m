@@ -600,7 +600,8 @@ CGFloat pixelIntegral(CGFloat value) {
 }
 
 + (UIImage *)hl_imageWithColor:(UIColor *)color {
-    UIGraphicsBeginImageContext(CGSizeMake(1, 1));
+    CGSize size = CGSizeMake(1, 1);
+    UIGraphicsBeginImageContext(size);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextAddRect(ctx, CGRectMake(0, 0, size.width, size.height));
     CGContextSetFillColorWithColor(ctx, color.CGColor);
