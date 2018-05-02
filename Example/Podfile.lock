@@ -1,0 +1,16 @@
+PODS:
+  - HaloObjC (1.1.1)
+
+DEPENDENCIES:
+  - HaloObjC (from `../`)
+
+EXTERNAL SOURCES:
+  HaloObjC:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  HaloObjC: bdb65ee9501d68af8afcc010de2db627d321d989
+
+PODFILE CHECKSUM: 2445fc2b61d98246e0f28e37fc16cad3d3ed9ce5
+
+COCOAPODS: 1.5.0

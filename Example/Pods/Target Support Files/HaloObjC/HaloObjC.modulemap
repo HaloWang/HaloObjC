@@ -1,0 +1,6 @@
+framework module HaloObjC {
+  umbrella header "HaloObjC-umbrella.h"
+
+  export *
+  module * { export * }
+}
