@@ -599,6 +599,17 @@ CGFloat pixelIntegral(CGFloat value) {
     return image;
 }
 
++ (UIImage *)hl_imageWithColor:(UIColor *)color {
+    UIGraphicsBeginImageContext(CGSizeMake(1, 1));
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextAddRect(ctx, CGRectMake(0, 0, size.width, size.height));
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
+    CGContextFillPath(ctx);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
 @end
 
 

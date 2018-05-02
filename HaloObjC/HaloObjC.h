@@ -326,6 +326,8 @@ CGFloat pixelIntegral(CGFloat value);
 
 + (UIImage *)hl_imageWithColor:(UIColor *)color size:(CGSize)size;
 
++ (UIImage *)hl_imageWithColor:(UIColor *)color;
+
 @end
 
 #pragma mark - UIColor
