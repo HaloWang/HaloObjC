@@ -10,5 +10,5 @@ Pod::Spec.new do |s|
   s.source_files          = 'HaloObjC/Classes/**/*'
   s.framework             = "UIKit"
   s.requires_arc          = true
-  s.public_header_files   = 'Pod/Classes/**/*.h'
+  s.public_header_files   = 'HaloObjC/Classes/**/*.h'
 end
