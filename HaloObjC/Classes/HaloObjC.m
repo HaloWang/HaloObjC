@@ -150,7 +150,7 @@ UIWindow *hl_applicationWindow() {
     
     NavigationBarHeight              = 64 + (iPhoneX ? 24 : 0);
     BottomSafeHeightForIPhoneX       = iPhoneX ? 34 : 0;
-    TabBarHeight                     = 49;
+    TabBarHeight                     = 49 + BottomSafeHeightForIPhoneX;
     StatusBarHeight                  = 20;
     ScreenBoundsWithoutNavigationBar = CGRectMake(0, 0, ScreenWidth, ScreenHeight - NavigationBarHeight);
     
