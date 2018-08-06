@@ -131,15 +131,23 @@ UIWindow *hl_applicationWindow() {
     return [[[UIApplication sharedApplication] delegate] window];
 }
 
+BOOL hl_isPortrait(void) {
+    return UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation);
+}
+
 @implementation HaloObjC
 
 + (void)server {
     
-    CGRect _screenBounds         = [UIScreen mainScreen].bounds;
-    ScreenBounds                 = _screenBounds;
-    CGSize _screenSize           = _screenBounds.size;
-    ScreenHeight                 = _screenSize.height;
-    ScreenWidth                  = _screenSize.width;
+    UIScreen *mainScreen = [UIScreen mainScreen];
+    
+    CGSize _trueSize     = mainScreen.currentMode.size;
+    CGFloat _scale       = mainScreen.scale;
+    CGRect _screenBounds = CGRectMake(0, 0, _trueSize.width / _scale, _trueSize.height / _scale);
+    ScreenBounds         = _screenBounds;
+    CGSize _screenSize   = _screenBounds.size;
+    ScreenHeight         = _screenSize.height;
+    ScreenWidth          = _screenSize.width;
     
     iPhone3_5 = ScreenWidth == 320 && ScreenHeight == 480;
     iPhone4_0 = ScreenWidth == 320 && ScreenHeight == 568;
@@ -188,6 +196,22 @@ UIWindow *hl_applicationWindow() {
 
 #pragma mark - NSString
 
+BOOL NSStringIsBlank(NSString *string) {
+    return string.length == 0;
+}
+
+BOOL NSStringIsAllSpaces(NSString *string) {
+    NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
+    if ([[string stringByTrimmingCharactersInSet: set] length] == 0) {
+        return YES;
+    }
+    return NO;
+}
+
+BOOL NSStringIsMeaningless(NSString *string) {
+    return NSStringIsBlank(string) || NSStringIsBlank(string);
+}
+
 @implementation NSString (HaloObjC)
 
 - (NSURL *)URL {
@@ -205,16 +229,28 @@ UIWindow *hl_applicationWindow() {
 
 @end
 
-#pragma mark - MutableDeepCopying
+#pragma mark - NSDictionary
 
-@implementation NSDictionary (MutableDeepCopy)
+@implementation NSDictionary (HaloObjC)
+
+- (NSString *)hl_jsonString {
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    return jsonString;
+}
+
+@end
+
+#pragma mark - HLMutableDeepCopying
+
+@implementation NSDictionary (HLMutableDeepCopy)
 - (NSMutableDictionary *)hl_mutableDeepCopy {
     NSMutableDictionary * returnDict = [[NSMutableDictionary alloc] initWithCapacity:self.count];
     NSArray * keys = [self allKeys];
     for(id key in keys) {
         id aValue = [self objectForKey:key];
         id theCopy = nil;
-        if([aValue conformsToProtocol:@protocol(MutableDeepCopying)]) {
+        if([aValue conformsToProtocol:@protocol(HLMutableDeepCopying)]) {
             theCopy = [aValue hl_mutableDeepCopy];
         } else if([aValue conformsToProtocol:@protocol(NSMutableCopying)]) {
             theCopy = [aValue mutableCopy];
@@ -229,12 +265,12 @@ UIWindow *hl_applicationWindow() {
 }
 @end
 
-@implementation NSArray (MutableDeepCopy)
+@implementation NSArray (HLMutableDeepCopy)
 -(NSMutableArray *)hl_mutableDeepCopy {
     NSMutableArray *returnArray = [[NSMutableArray alloc] initWithCapacity:self.count];
     for(id aValue in self) {
         id theCopy = nil;
-        if([aValue conformsToProtocol:@protocol(MutableDeepCopying)]) {
+        if([aValue conformsToProtocol:@protocol(HLMutableDeepCopying)]) {
             theCopy = [aValue hl_mutableDeepCopy];
         } else if([aValue conformsToProtocol:@protocol(NSMutableCopying)]) {
             theCopy = [aValue mutableCopy];
@@ -646,6 +682,19 @@ UIColor *HEXStr(NSString *hexString) {
     float red, green, blue, alpha;
     _SKScanHexColor(hexString, &red, &green, &blue, &alpha);
     return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
+
+NSString *HEXStringFromColor(UIColor *color) {
+    const CGFloat *components = CGColorGetComponents(color.CGColor);
+    
+    CGFloat r = components[0];
+    CGFloat g = components[1];
+    CGFloat b = components[2];
+    
+    return [NSString stringWithFormat:@"%02lX%02lX%02lX",
+            lroundf(r * 255),
+            lroundf(g * 255),
+            lroundf(b * 255)];
 }
 
 #endif

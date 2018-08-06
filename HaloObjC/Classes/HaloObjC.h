@@ -119,6 +119,8 @@ UIViewController *hl_applicationRootViewController(void);
 
 UIWindow *hl_applicationWindow(void);
 
+BOOL hl_isPortrait(void);
+
 #pragma mark - HaloObjC
 
 @interface HaloObjC : NSObject
@@ -142,6 +144,12 @@ UIWindow *hl_applicationWindow(void);
 
 #pragma mark - NSString
 
+BOOL NSStringIsBlank(NSString *string);
+
+BOOL NSStringIsAllSpaces(NSString *string);
+
+BOOL NSStringIsMeaningless(NSString *string);
+
 @interface NSString (HaloObjC)
 
 @property (nonatomic, readonly) NSURL *URL;
@@ -150,18 +158,26 @@ UIWindow *hl_applicationWindow(void);
 
 @end
 
-#pragma mark - MutableDeepCopying
+#pragma mark - NSDictionary
 
-@protocol MutableDeepCopying <NSObject>
+@interface NSDictionary (HaloObjC)
+
+@property (nonatomic, readonly) NSString *hl_jsonString;
+
+@end
+
+#pragma mark - HLMutableDeepCopying
+
+@protocol HLMutableDeepCopying <NSObject>
 
 -(id)hl_mutableDeepCopy;
 
 @end
 
-@interface NSDictionary (MutableDeepCopy) <MutableDeepCopying>
+@interface NSDictionary (HLMutableDeepCopy) <HLMutableDeepCopying>
 @end
 
-@interface NSArray (MutableDeepCopy) <MutableDeepCopying>
+@interface NSArray (HLMutableDeepCopy) <HLMutableDeepCopying>
 @end
 
 #pragma mark - SandBox
@@ -337,6 +353,11 @@ CGFloat pixelIntegral(CGFloat value);
  *  use hexstring like @"FFFFFF" (or @"#FFFFFF") to create a UIColor object
  */
 UIColor *HEXStr(NSString *hexString);
+
+/**
+ Get a string like "FF0066" from UIColor object
+ */
+NSString *HEXStringFromColor(UIColor *color);
 
 #endif
 
