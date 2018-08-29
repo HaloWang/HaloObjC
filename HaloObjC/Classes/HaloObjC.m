@@ -120,21 +120,6 @@ void ccWarning(id obj) {
     printf("%s\n", [[NSString stringWithFormat:@"%@%@", @"⚠️", [obj description]] UTF8String]);
 }
 
-
-#pragma mark - App
-
-UIViewController *hl_applicationRootViewController() {
-    return [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-}
-
-UIWindow *hl_applicationWindow() {
-    return [[[UIApplication sharedApplication] delegate] window];
-}
-
-BOOL hl_isPortrait(void) {
-    return UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation);
-}
-
 @implementation HaloObjC
 
 + (void)server {
@@ -192,6 +177,30 @@ BOOL hl_isPortrait(void) {
     CCLogEnable = enable;
 }
 
++ (UIViewController *)appRootViewController {
+    return [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+}
+
++ (void)setAppRootViewController:(UIViewController *)appRootViewController {
+    [[[UIApplication sharedApplication] delegate] window].rootViewController = appRootViewController;
+}
+
++ (UIWindow *)appWindow {
+    return [[[UIApplication sharedApplication] delegate] window];
+}
+
++ (BOOL)appIsPortrait {
+    return UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
+}
+
++ (CGFloat)screenWidth {
+    return [UIScreen mainScreen].bounds.size.width;
+}
+
++ (CGFloat)screenHeight {
+    return [UIScreen mainScreen].bounds.size.height;
+}
+
 @end
 
 #pragma mark - NSString
@@ -209,7 +218,7 @@ BOOL NSStringIsAllSpaces(NSString *string) {
 }
 
 BOOL NSStringIsMeaningless(NSString *string) {
-    return NSStringIsBlank(string) || NSStringIsBlank(string);
+    return NSStringIsBlank(string) || NSStringIsAllSpaces(string);
 }
 
 @implementation NSString (HaloObjC)

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+// 在 HaloObjC.server 后被赋值，仅赋值一次
+
 #pragma mark - 固定尺寸
 extern CGRect  ScreenBounds;
 extern CGRect  ScreenBoundsWithoutNavigationBar;
@@ -113,14 +115,6 @@ void ccError(id obj);
  */
 void ccWarning(id obj);
 
-#pragma mark - App
-
-UIViewController *hl_applicationRootViewController(void);
-
-UIWindow *hl_applicationWindow(void);
-
-BOOL hl_isPortrait(void);
-
 #pragma mark - HaloObjC
 
 @interface HaloObjC : NSObject
@@ -139,6 +133,12 @@ BOOL hl_isPortrait(void);
  *  调用 ccError 时的回调
  */
 + (void)setCCErrorFunctionCallBack:(void(^)(NSString *displayInfo))callBack;
+
+@property (readonly, class) UIWindow *appWindow;
+@property (class) UIViewController *appRootViewController;
+@property (readonly, class) BOOL appIsPortrait;
+@property (readonly, class) CGFloat screenHeight;
+@property (readonly, class) CGFloat screenWidth;
 
 @end
 
