@@ -156,11 +156,21 @@ BOOL NSStringIsMeaningless(NSString *string);
 
 @property (nonatomic, readonly) NSDictionary *hl_jsonDictionary;
 
+@property (nonatomic, readonly) NSArray *hl_jsonArray;
+
 @end
 
 #pragma mark - NSDictionary
 
 @interface NSDictionary (HaloObjC)
+
+@property (nonatomic, readonly) NSString *hl_jsonString;
+
+@end
+
+#pragma mark - NSArray
+
+@interface NSArray (HaloObjC)
 
 @property (nonatomic, readonly) NSString *hl_jsonString;
 

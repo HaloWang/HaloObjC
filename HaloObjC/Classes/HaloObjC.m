@@ -233,7 +233,22 @@ BOOL NSStringIsMeaningless(NSString *string) {
     if (err) {
         ccWarning(err);
     }
-    return _dic;
+    if ([_dic isKindOfClass:NSDictionary.class]) {
+        return _dic;
+    }
+    return nil;
+}
+
+- (NSArray *)hl_jsonArray {
+    NSError *err;
+    NSArray *_array = [NSJSONSerialization JSONObjectWithData:[self dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:&err];
+    if (err) {
+        ccWarning(err);
+    }
+    if ([_array isKindOfClass:NSArray.class]) {
+        return _array;
+    }
+    return nil;
 }
 
 @end
@@ -241,6 +256,18 @@ BOOL NSStringIsMeaningless(NSString *string) {
 #pragma mark - NSDictionary
 
 @implementation NSDictionary (HaloObjC)
+
+- (NSString *)hl_jsonString {
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    return jsonString;
+}
+
+@end
+
+#pragma mark - NSArray
+
+@implementation NSArray (HaloObjC)
 
 - (NSString *)hl_jsonString {
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self options:NSJSONWritingPrettyPrinted error:nil];
