@@ -191,6 +191,26 @@ void ccWarning(id obj) {
     [[[UIApplication sharedApplication] delegate] window].rootViewController = appRootViewController;
 }
 
++ (UIViewController *)appTopViewController {
+    UIViewController *resultVC;
+    resultVC = [self _appTopViewController:self.appRootViewController];
+    while (resultVC.presentedViewController) {
+        resultVC = [self _appTopViewController:resultVC.presentedViewController];
+    }
+    return resultVC;
+}
+
++ (UIViewController *)_appTopViewController:(UIViewController *)vc {
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        return [self _appTopViewController:[(UINavigationController *)vc topViewController]];
+    } else if ([vc isKindOfClass:[UITabBarController class]]) {
+        return [self _appTopViewController:[(UITabBarController *)vc selectedViewController]];
+    } else {
+        return vc;
+    }
+    return nil;
+}
+
 + (UIWindow *)appWindow {
     return [[[UIApplication sharedApplication] delegate] window];
 }

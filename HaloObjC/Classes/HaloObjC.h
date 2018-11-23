@@ -137,7 +137,8 @@ void ccWarning(id obj);
 + (void)setCCErrorFunctionCallBack:(void(^)(NSString *displayInfo))callBack;
 
 @property (readonly, class) UIWindow *appWindow;
-@property (class) UIViewController *appRootViewController;
+@property (readwrite, class) UIViewController *appRootViewController;
+@property (readonly, class) UIViewController *appTopViewController;
 @property (readonly, class) BOOL appIsPortrait;
 @property (readonly, class) CGFloat screenHeight;
 @property (readonly, class) CGFloat screenWidth;

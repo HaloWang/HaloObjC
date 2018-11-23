@@ -48,6 +48,7 @@
     ccRight([NSString stringWithFormat:@"%@", @(NavigationBarHeight)]);
     ccRight([NSString stringWithFormat:@"%@", @(TabBarHeight)]);
     ccRight(self.navigationController.navigationBar);
+    ccRight(HaloObjC.appTopViewController);
     // Dispose of any resources that can be recreated.
 }
 
