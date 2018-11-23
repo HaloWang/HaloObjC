@@ -48,6 +48,8 @@ extern BOOL iPhone4_0;
 extern BOOL iPhone3_5;
 extern BOOL iPhoneX;
 extern BOOL iPhone5_8;
+extern BOOL iPhoneXsMax;
+extern BOOL iPhoneXR;
 
 #pragma mark - Measure
 

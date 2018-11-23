@@ -47,6 +47,8 @@ BOOL iPhone4_0;
 BOOL iPhone3_5;
 BOOL iPhoneX;
 BOOL iPhone5_8;
+BOOL iPhoneXsMax;
+BOOL iPhoneXR;
 
 #pragma mark - Measure
 
@@ -134,15 +136,19 @@ void ccWarning(id obj) {
     ScreenHeight         = _screenSize.height;
     ScreenWidth          = _screenSize.width;
     
-    iPhone3_5 = ScreenWidth == 320 && ScreenHeight == 480;
-    iPhone4_0 = ScreenWidth == 320 && ScreenHeight == 568;
-    iPhone4_7 = ScreenWidth == 375 && ScreenHeight == 667;
-    iPhone5_5 = ScreenWidth == 414 && ScreenHeight == 736;
-    iPhoneX   = ScreenWidth == 375 && ScreenHeight == 812;
-    iPhone5_8 = iPhoneX;
+    iPhone3_5   = ScreenWidth == 320 && ScreenHeight == 480;
+    iPhone4_0   = ScreenWidth == 320 && ScreenHeight == 568;
+    iPhone4_7   = ScreenWidth == 375 && ScreenHeight == 667;
+    iPhone5_5   = ScreenWidth == 414 && ScreenHeight == 736;
+    iPhoneX     = ScreenWidth == 375 && ScreenHeight == 812;
+    iPhone5_8   = iPhoneX;
+    iPhoneXsMax = ScreenWidth == 414 && ScreenHeight == 896;
+    iPhoneXR    = iPhoneXsMax;
     
-    NavigationBarHeight              = 64 + (iPhoneX ? 24 : 0);
-    BottomSafeHeightForIPhoneX       = iPhoneX ? 34 : 0;
+    BOOL needSafeAreaLayout = iPhoneX || iPhoneXsMax || iPhoneXR;
+    
+    NavigationBarHeight              = 64 + (needSafeAreaLayout ? 24 : 0);
+    BottomSafeHeightForIPhoneX       = needSafeAreaLayout ? 34 : 0;
     TabBarHeight                     = 49 + BottomSafeHeightForIPhoneX;
     StatusBarHeight                  = 20;
     ScreenBoundsWithoutNavigationBar = CGRectMake(0, 0, ScreenWidth, ScreenHeight - NavigationBarHeight);

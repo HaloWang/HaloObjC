@@ -35,10 +35,19 @@
     
     UIImage *testImage = [UIImage hl_imageWithColor:HEX(0x345678) size:CGSizeMake(200, 300)];
     ccRight(testImage);
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    if (@available(iOS 11.0, *)) {
+        ccRight(NSStringFromUIEdgeInsets(self.view.safeAreaInsets));
+    } else {
+        // Fallback on earlier versions
+    }
+    ccRight([NSString stringWithFormat:@"%@", @(NavigationBarHeight)]);
+    ccRight([NSString stringWithFormat:@"%@", @(TabBarHeight)]);
+    ccRight(self.navigationController.navigationBar);
     // Dispose of any resources that can be recreated.
 }
 
