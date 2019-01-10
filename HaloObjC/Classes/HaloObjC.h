@@ -145,6 +145,14 @@ void ccWarning(id obj);
 
 @end
 
+#pragma mark - NSObject
+
+@interface NSObject (logProperties)
+
+- (void) logProperties;
+
+@end
+
 #pragma mark - NSString
 
 BOOL NSStringIsBlank(NSString *string);

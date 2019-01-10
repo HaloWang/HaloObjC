@@ -173,6 +173,11 @@
 				CLASSPREFIX = HL;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = HaloWang;
+				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = MEZ68LP7JD;
+					};
+				};
 			};
 			buildConfigurationList = 6003F585195388D10070C39A /* Build configuration list for PBXProject "HaloObjC" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -364,6 +369,7 @@
 			baseConfigurationReference = 3411B4811DEBC2A41E6D877C /* Pods-HaloObjC_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = MEZ68LP7JD;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HaloObjC/HaloObjC-Prefix.pch";
 				INFOPLIST_FILE = "HaloObjC/HaloObjC-Info.plist";
@@ -379,6 +385,7 @@
 			baseConfigurationReference = B7A1C090CCE1925F616B1782 /* Pods-HaloObjC_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = MEZ68LP7JD;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HaloObjC/HaloObjC-Prefix.pch";
 				INFOPLIST_FILE = "HaloObjC/HaloObjC-Info.plist";

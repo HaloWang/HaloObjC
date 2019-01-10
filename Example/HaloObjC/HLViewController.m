@@ -36,6 +36,8 @@
     UIImage *testImage = [UIImage hl_imageWithColor:HEX(0x345678) size:CGSizeMake(200, 300)];
     ccRight(testImage);
     
+    [testImage logProperties];
+    
 }
 
 - (void)didReceiveMemoryWarning {

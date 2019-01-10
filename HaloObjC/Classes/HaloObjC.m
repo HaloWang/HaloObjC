@@ -7,6 +7,7 @@
 //
 
 #import "HaloObjC.h"
+#import <objc/runtime.h>
 
 #pragma mark - 固定尺寸
 CGRect  ScreenBounds;
@@ -225,6 +226,31 @@ void ccWarning(id obj) {
 
 + (CGFloat)screenHeight {
     return [UIScreen mainScreen].bounds.size.height;
+}
+
+@end
+
+#pragma mark - NSObject
+
+@implementation NSObject (logProperties)
+
+- (void)logProperties {
+    ccRight([NSString stringWithFormat:@"log properties for %@", self]);
+    @autoreleasepool {
+        unsigned int numberOfProperties = 0;
+        objc_property_t *propertyArray = class_copyPropertyList([self class], &numberOfProperties);
+        for (NSUInteger i = 0; i < numberOfProperties; i++) {
+            objc_property_t property = propertyArray[i];
+            NSString *name = [[NSString alloc] initWithUTF8String:property_getName(property)];
+            @try {
+                cc([NSString stringWithFormat:@"%@ : %@", name, [self valueForKey:name]]);
+            } @catch (NSException *exception) {
+                ccWarning(exception);
+            } @finally {
+            }
+        }
+        free(propertyArray);
+    }
 }
 
 @end
