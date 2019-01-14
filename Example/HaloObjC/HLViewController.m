@@ -37,7 +37,6 @@
     ccRight(testImage);
     
     [testImage logProperties];
-    
 }
 
 - (void)didReceiveMemoryWarning {

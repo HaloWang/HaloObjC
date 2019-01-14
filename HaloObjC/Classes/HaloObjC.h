@@ -46,10 +46,11 @@ extern BOOL iPhone5_5;
 extern BOOL iPhone4_7;
 extern BOOL iPhone4_0;
 extern BOOL iPhone3_5;
-extern BOOL iPhoneX;
-extern BOOL iPhone5_8;
-extern BOOL iPhoneXsMax;
-extern BOOL iPhoneXR;
+extern BOOL iPhoneX __deprecated_msg("HaloObjC: use NeedSafeAreaLayout instead");
+extern BOOL iPhone5_8 __deprecated_msg("HaloObjC: use NeedSafeAreaLayout instead");
+extern BOOL iPhoneXsMax __deprecated_msg("HaloObjC: use NeedSafeAreaLayout instead");
+extern BOOL iPhoneXR __deprecated_msg("HaloObjC: use NeedSafeAreaLayout instead");
+extern BOOL NeedSafeAreaLayout;
 
 #pragma mark - Measure
 

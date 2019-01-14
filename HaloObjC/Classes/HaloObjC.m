@@ -50,6 +50,7 @@ BOOL iPhoneX;
 BOOL iPhone5_8;
 BOOL iPhoneXsMax;
 BOOL iPhoneXR;
+BOOL NeedSafeAreaLayout;
 
 #pragma mark - Measure
 
@@ -146,10 +147,10 @@ void ccWarning(id obj) {
     iPhoneXsMax = ScreenWidth == 414 && ScreenHeight == 896;
     iPhoneXR    = iPhoneXsMax;
     
-    BOOL needSafeAreaLayout = iPhoneX || iPhoneXsMax || iPhoneXR;
+    NeedSafeAreaLayout = iPhoneX || iPhoneXsMax;
     
-    NavigationBarHeight              = 64 + (needSafeAreaLayout ? 24 : 0);
-    BottomSafeHeightForIPhoneX       = needSafeAreaLayout ? 34 : 0;
+    NavigationBarHeight              = 64 + (NeedSafeAreaLayout ? 24 : 0);
+    BottomSafeHeightForIPhoneX       = NeedSafeAreaLayout ? 34 : 0;
     TabBarHeight                     = 49 + BottomSafeHeightForIPhoneX;
     StatusBarHeight                  = 20;
     ScreenBoundsWithoutNavigationBar = CGRectMake(0, 0, ScreenWidth, ScreenHeight - NavigationBarHeight);
