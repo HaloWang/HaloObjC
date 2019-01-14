@@ -142,12 +142,17 @@ void ccWarning(id obj) {
     iPhone4_0   = ScreenWidth == 320 && ScreenHeight == 568;
     iPhone4_7   = ScreenWidth == 375 && ScreenHeight == 667;
     iPhone5_5   = ScreenWidth == 414 && ScreenHeight == 736;
-    iPhoneX     = ScreenWidth == 375 && ScreenHeight == 812;
-    iPhone5_8   = iPhoneX;
-    iPhoneXsMax = ScreenWidth == 414 && ScreenHeight == 896;
-    iPhoneXR    = iPhoneXsMax;
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    
+    iPhoneX            = ScreenWidth == 375 && ScreenHeight == 812;
+    iPhone5_8          = iPhoneX;
+    iPhoneXsMax        = ScreenWidth == 414 && ScreenHeight == 896;
+    iPhoneXR           = iPhoneXsMax;
     NeedSafeAreaLayout = iPhoneX || iPhoneXsMax;
+    
+#pragma clang diagnostic pop
     
     NavigationBarHeight              = 64 + (NeedSafeAreaLayout ? 24 : 0);
     BottomSafeHeightForIPhoneX       = NeedSafeAreaLayout ? 34 : 0;
