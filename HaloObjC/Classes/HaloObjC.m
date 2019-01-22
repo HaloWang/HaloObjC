@@ -129,14 +129,9 @@ void ccWarning(id obj) {
 + (void)server {
     
     UIScreen *mainScreen = [UIScreen mainScreen];
-    
-    CGSize _trueSize     = mainScreen.currentMode.size;
-    CGFloat _scale       = mainScreen.scale;
-    CGRect _screenBounds = CGRectMake(0, 0, _trueSize.width / _scale, _trueSize.height / _scale);
-    ScreenBounds         = _screenBounds;
-    CGSize _screenSize   = _screenBounds.size;
-    ScreenHeight         = _screenSize.height;
-    ScreenWidth          = _screenSize.width;
+    ScreenBounds         = mainScreen.bounds;
+    ScreenHeight         = ScreenBounds.size.height;
+    ScreenWidth          = ScreenBounds.size.width;
     
     iPhone3_5   = ScreenWidth == 320 && ScreenHeight == 480;
     iPhone4_0   = ScreenWidth == 320 && ScreenHeight == 568;
