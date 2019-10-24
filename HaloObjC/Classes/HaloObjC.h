@@ -14,8 +14,15 @@
 #pragma mark - 固定尺寸
 extern CGRect  ScreenBounds;
 extern CGRect  ScreenBoundsWithoutNavigationBar;
+/// 手机启动时屏幕宽度，视手机启动时的横竖屏状态而定
 extern CGFloat ScreenWidth;
+/// 手机启动时屏幕高度，视手机启动时的横竖屏状态而定
 extern CGFloat ScreenHeight;
+/// 手机为竖屏状态下时的屏幕宽度，默认竖屏宽度一定小于高度
+extern CGFloat VerticalScreenWidth;
+/// 手机为竖屏状态下时的屏幕高度，默认竖屏宽度一定小于高度
+extern CGFloat VerticalScreenHeight;
+/// 手机为竖屏状态下时的系统导航栏高度，包含 statusbar，如 iPhone 8 应该为 64，iPhone X 为 64+24
 extern CGFloat NavigationBarHeight;
 extern CGFloat BottomSafeHeightForIPhoneX;
 extern CGFloat TabBarHeight;
@@ -141,7 +148,9 @@ void ccWarning(id obj);
 @property (readwrite, class) UIViewController *appRootViewController;
 @property (readonly, class) UIViewController *appTopViewController;
 @property (readonly, class) BOOL appIsPortrait;
+/// 当前屏幕高度
 @property (readonly, class) CGFloat screenHeight;
+/// 当前屏幕宽度
 @property (readonly, class) CGFloat screenWidth;
 
 @end
@@ -150,7 +159,7 @@ void ccWarning(id obj);
 
 @interface NSObject (logProperties)
 
-- (void) logProperties;
+- (void)logProperties;
 
 @end
 

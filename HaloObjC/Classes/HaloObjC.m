@@ -14,6 +14,8 @@ CGRect  ScreenBounds;
 CGRect  ScreenBoundsWithoutNavigationBar;
 CGFloat ScreenWidth;
 CGFloat ScreenHeight;
+CGFloat VerticalScreenWidth;
+CGFloat VerticalScreenHeight;
 CGFloat NavigationBarHeight;
 CGFloat BottomSafeHeightForIPhoneX;
 CGFloat TabBarHeight;
@@ -132,6 +134,9 @@ void ccWarning(id obj) {
     ScreenBounds         = mainScreen.bounds;
     ScreenHeight         = ScreenBounds.size.height;
     ScreenWidth          = ScreenBounds.size.width;
+    
+    VerticalScreenWidth        = MIN(ScreenHeight, ScreenWidth);
+    VerticalScreenHeight       = MAX(ScreenHeight, ScreenWidth);
     
     iPhone3_5   = ScreenWidth == 320 && ScreenHeight == 480;
     iPhone4_0   = ScreenWidth == 320 && ScreenHeight == 568;
